@@ -165,6 +165,12 @@ Additionally, I'd like to understand:
 - Are all scripts defined in package.json as entrypoints, or do you run commands inline (e.g., with npx)?
 - Does your test suite require any infrastructure (testcontainers, docker-compose, etc.)?
 
+**Testing Conventions (important for task generation):**
+- Where do test files live? (e.g., `spec/`, `tests/`, `__tests__/`, colocated with source)
+- What is the test file naming convention? (e.g., `*.spec.ts`, `*.test.js`, `*_test.go`)
+- What command runs the full test suite? What about a single test file?
+- Do you have separate commands for unit vs integration vs e2e tests?
+
 Please confirm the detected items are correct and answer the questions above.
 ```
 
@@ -232,6 +238,7 @@ Here's the complete tech stack:
 **Database:** [value] with [ORM]
 **Validation:** [value]
 **Testing:** [test runner], [test infrastructure if any]
+**Test Conventions:** [test directory], [naming pattern], [run command]
 **Migrations:** [tool and process]
 **Scripts & Commands:** [approach]
 **Build Tools:** [value]
@@ -277,6 +284,15 @@ After user confirms, write the tech stack to `ouroboros/reference/tech-stack.md`
 ## Testing
 - Test Runner: [e.g., Vitest]
 - Test Infrastructure: [e.g., testcontainers for DB, docker-compose sidecar]
+
+## Testing Conventions
+- Test Directory: [e.g., `spec/`, `tests/`, `__tests__/`, or colocated with source files]
+- Test File Naming: [e.g., `*.spec.ts`, `*.test.js`, `*_test.go`]
+- Run All Tests: [e.g., `pnpm test`, `npm run test`, `go test ./...`]
+- Run Single File: [e.g., `pnpm test path/to/file.spec.ts`]
+- Unit Tests: [command if separate, or "included in main test command"]
+- Integration Tests: [command if separate]
+- E2E Tests: [e.g., `pnpm test:e2e`, or "N/A"]
 
 ## Database Migrations
 - Tool: [e.g., drizzle-kit, prisma migrate]

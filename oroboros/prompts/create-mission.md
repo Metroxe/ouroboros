@@ -28,7 +28,7 @@ Before diving into questions, get a high-level understanding of the project by r
 
 2. **Check for a docs folder:** Look for a `docs/` directory or similar documentation folders. Skim any overview or introduction documents.
 
-3. **Check the reference folder:** Read any existing files in `ouroboros/reference/` such as `product-description.md` or `tech-stack.md`.
+3. **Check the reference folder:** Read any existing files in `ouroboros/reference/` such as `tech-stack.md`.
 
 Use any existing context to inform your questions in the next phase. If the project already has documentation that partially answers mission questions, acknowledge what you found and focus your questions on gaps.
 
@@ -168,7 +168,7 @@ Wait for user confirmation before proceeding to save.
 
 ## Step 2: Save the Mission
 
-After user confirms, write the mission to `ouroboros/reference/mission.md` using this exact structure:
+After user confirms, write the mission to `ouroboros/reference/product-description.md` using this exact structure:
 
 ```markdown
 # Product Mission
@@ -201,7 +201,7 @@ After user confirms, write the mission to `ouroboros/reference/mission.md` using
 After saving, confirm to the user:
 
 ```
-Mission saved to `ouroboros/reference/mission.md`
+Mission saved to `ouroboros/reference/product-description.md`
 
 Your product mission is now documented and ready to guide epic and feature planning. When you're ready to start building, use the epic creation prompt to define your first epic.
 ```

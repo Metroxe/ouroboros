@@ -74,7 +74,7 @@ Follow these instructions for researching this epic's requirements:
 
 In order to have a productive conversation with the user, understand the broader product context:
 
-1. **Read Product Mission**: Load `ouroboros/reference/mission.md` to understand:
+1. **Read Product Description**: Load `ouroboros/reference/product-description.md` to understand:
    - The product's overall mission and purpose
    - Target users and their primary use cases
    - Core problems the product aims to solve
@@ -95,11 +95,18 @@ This context will help you:
 - Identify existing features that might be reused or referenced
 - Ensure the feature aligns with product goals
 - Understand user needs and expectations
+- Discover patterns and decisions from related epics that should inform this one
 
 ## Step 2: Read Relevant Epics
 
-1. **Identify Relevant Epics** Decide up to 5 epics in the epic-index are relevant to the current index.
+1. **Identify Relevant Epics** Decide up to 5 epics in the epic-index are relevant to the current epic.
 2. **Read the Relevant Epics** For each epic that is relevant, navigate to the epic folder for that epic, and familiarize yourself with it.
+3. **Capture Key Insights** As you read each related epic, note:
+   - Patterns, components, or approaches that could be reused
+   - Technical decisions that should remain consistent
+   - Scope boundaries that might affect this epic
+   - Potential conflicts or dependencies with the current epic
+   - Lessons learned or constraints discovered in related work
 
 ## Step 3: Generate First Round of Questions with Visual Request
 
@@ -285,6 +292,25 @@ Use the following structure and do not deviate from this structure when writing 
 
 [If bash check found no files]
 No visual assets provided.
+
+## Related Epic Considerations
+
+### Epics Reviewed:
+- **[Epic Name]** ([path-to-epic]): [Why it was relevant]
+
+### Key Insights:
+- [Reusable patterns or components identified]
+- [Technical decisions to maintain consistency with]
+- [Dependencies or integration points discovered]
+- [Scope boundaries from related work that affect this epic]
+
+### Considerations for Implementation:
+- [Specific guidance based on what was learned from related epics]
+- [Potential conflicts to be aware of]
+- [Approaches that worked well in related epics]
+
+[If no related epics were identified]
+No related epics identified in the epic index.
 
 ## Requirements Summary
 
