@@ -28,9 +28,15 @@ echo -e "${BLUE}│${NC}         ${GREEN}oroboros installer${NC}         ${BLUE}
 echo -e "${BLUE}╰─────────────────────────────────────╯${NC}"
 echo ""
 
+# Parse version from "version: X.X.X" format
+parse_version() {
+    local content="$1"
+    echo "$content" | sed -E 's/^(version:\s*)?//' | tr -d '[:space:]'
+}
+
 # Check for existing installation
 if [ -f "$INSTALL_DIR/.version" ]; then
-    CURRENT_VERSION=$(cat "$INSTALL_DIR/.version")
+    CURRENT_VERSION=$(parse_version "$(cat "$INSTALL_DIR/.version")")
     echo -e "Found existing installation: ${YELLOW}v${CURRENT_VERSION}${NC}"
     MODE="update"
 else
@@ -110,15 +116,16 @@ else
     # Create .gitkeep in epics
     touch "$INSTALL_DIR/epics/.gitkeep"
     
-    NEW_VERSION=$(cat "$INSTALL_DIR/.version")
+    NEW_VERSION=$(parse_version "$(cat "$INSTALL_DIR/.version")")
     echo ""
     if [ "$MODE" = "update" ]; then
         echo -e "${GREEN}✓ Updated oroboros to v${NEW_VERSION}${NC}"
+        echo ""
+        echo -e "${GREEN}Update complete!${NC}"
     else
         echo -e "${GREEN}✓ Installed oroboros v${NEW_VERSION}${NC}"
+        echo ""
+        echo -e "${GREEN}Done!${NC} Run ${BLUE}oroboros/prompts/create-mission.md${NC} to get started."
     fi
+    echo ""
 fi
-
-echo ""
-echo -e "${GREEN}Done!${NC} Run ${BLUE}oroboros/prompts/create-mission.md${NC} to get started."
-echo ""
