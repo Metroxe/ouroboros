@@ -235,7 +235,11 @@ async function main(): Promise<void> {
   });
 
   console.log();
-  footer("Done! Run oroboros/prompts/create-mission.md to get started.");
+  if (isUpdate) {
+    footer("Update complete!");
+  } else {
+    footer("Done! Run oroboros/prompts/create-mission.md to get started.");
+  }
 }
 
 // Run
