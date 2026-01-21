@@ -3,10 +3,10 @@
 # Oroboros Installer
 # 
 # Usage:
-#   curl -fsSL https://raw.githubusercontent.com/cvp/ouroboros/main/install.sh | bash
+#   curl -fsSL https://raw.githubusercontent.com/Metroxe/ouroboros/main/install.sh | bash
 #   
 # Or with a specific version:
-#   curl -fsSL https://raw.githubusercontent.com/cvp/ouroboros/main/install.sh | bash -s -- v1.0.0
+#   curl -fsSL https://raw.githubusercontent.com/Metroxe/ouroboros/main/install.sh | bash -s -- v1.0.0
 #
 # =============================================================================
 
@@ -19,7 +19,7 @@ YELLOW='\033[0;33m'
 BLUE='\033[0;34m'
 NC='\033[0m'
 
-REPO="cvp/ouroboros"
+REPO="Metroxe/ouroboros"
 INSTALL_DIR="./oroboros"
 
 echo ""
