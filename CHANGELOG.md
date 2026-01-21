@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.2.1](https://github.com/Metroxe/ouroboros/compare/v0.2.0...v0.2.1) (2026-01-21)
+
+
+### Bug Fixes
+
+* correct repo path in install.sh ([ce2d3c1](https://github.com/Metroxe/ouroboros/commit/ce2d3c1c3ec6fd0896a66939d572757ed4100c11))
+* integrate build into release-please workflow for proper release triggers ([affcf10](https://github.com/Metroxe/ouroboros/commit/affcf1009805afd705c8afc52e91104d379c4b7b))
+* parse version format correctly in install.sh bootstrap ([4d88bf2](https://github.com/Metroxe/ouroboros/commit/4d88bf2bbf7bd85e15426c8bb8db9e06b815d1b4))
+* show appropriate message for install vs update ([c04d3a4](https://github.com/Metroxe/ouroboros/commit/c04d3a48b0fd919be3dca436dd9efdc7c7cb905e))
+
 ## [0.2.0](https://github.com/Metroxe/ouroboros/compare/v0.1.0...v0.2.0) (2026-01-21)
 
 
