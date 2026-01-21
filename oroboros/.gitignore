@@ -1,0 +1,3 @@
+# Compiled scripts (large binaries, downloaded via install)
+scripts/*
+!scripts/.gitkeep

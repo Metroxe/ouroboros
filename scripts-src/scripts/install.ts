@@ -65,6 +65,7 @@ const FRAMEWORK_DIRS = ["prompts", "scripts"];
 
 // Scaffold files that are only created if missing
 const SCAFFOLD_FILES = [
+  ".gitignore",
   "reference/epic-index.md",
   "reference/gotchas.md",
 ];
