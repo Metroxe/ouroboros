@@ -22,4 +22,3 @@ jobs:
         id: release
         with:
           release-type: simple
-          package-name: oroboros
