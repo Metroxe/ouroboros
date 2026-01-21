@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.0](https://github.com/Metroxe/ouroboros/compare/v0.2.1...v0.3.0) (2026-01-21)
+
+
+### Features
+
+* add .gitignore to exclude large compiled scripts from user repos ([88e1fe1](https://github.com/Metroxe/ouroboros/commit/88e1fe17e1959207c60732b15ea45bce920581f1))
+
 ## [0.2.1](https://github.com/Metroxe/ouroboros/compare/v0.2.0...v0.2.1) (2026-01-21)
 
 
