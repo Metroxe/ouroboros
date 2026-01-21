@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="assets/banner.png" alt="Ouroboros Banner" width="100%">
+</p>
+
 # Oroboros
 
 A prompt-driven development workflow system for AI-assisted software engineering.
