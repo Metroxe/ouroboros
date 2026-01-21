@@ -1,0 +1,59 @@
+name: Build Release
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Release tag to build for (e.g., v1.0.0)'
+        required: false
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: macos-14  # Apple Silicon runner
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.tag || github.ref }}
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        working-directory: scripts-src
+        run: bun install
+
+      - name: Build scripts
+        working-directory: scripts-src
+        run: ./build.sh -v
+
+      - name: Get version
+        id: version
+        run: |
+          VERSION=$(cat oroboros/.version)
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+      - name: Create tarball
+        run: |
+          tar -czvf oroboros-darwin-arm64.tar.gz oroboros/
+
+      - name: Upload to release
+        if: github.event_name == 'release'
+        uses: softprops/action-gh-release@v2
+        with:
+          files: oroboros-darwin-arm64.tar.gz
+
+      - name: Upload artifact (for manual runs)
+        if: github.event_name == 'workflow_dispatch'
+        uses: actions/upload-artifact@v4
+        with:
+          name: oroboros-darwin-arm64
+          path: oroboros-darwin-arm64.tar.gz

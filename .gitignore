@@ -1,2 +1,12 @@
 .vscode
 scratch
+test-installation
+
+# Build artifacts
+scripts-src/node_modules
+scripts-src/dist
+scripts-src/bun.lock
+
+# Compiled binaries (built from scripts-src, attached to releases)
+oroboros/scripts/*
+!oroboros/scripts/.gitkeep
