@@ -4,7 +4,7 @@
       "release-type": "simple",
       "extra-files": [
         {
-          "type": "plain-text",
+          "type": "generic",
           "path": "oroboros/.version"
         }
       ]

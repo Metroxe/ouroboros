@@ -16,7 +16,6 @@
  */
 
 import { join, resolve } from "path";
-import { readFileSync } from "fs";
 import {
   header,
   footer,
@@ -57,11 +56,8 @@ function getSourceDir(): string {
 
 // Get the version from the source .version file
 function getSourceVersion(): string {
-  const versionFile = join(getSourceDir(), ".version");
-  if (!exists(versionFile)) {
-    return "0.0.0";
-  }
-  return readFileSync(versionFile, "utf-8").trim();
+  const version = readInstalledVersion(getSourceDir());
+  return version || "0.0.0";
 }
 
 // Framework files that are always overwritten on update
