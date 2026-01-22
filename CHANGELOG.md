@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.0](https://github.com/Metroxe/ouroboros/compare/v0.4.0...v0.5.0) (2026-01-22)
+
+
+### Features
+
+* enhance agent cursor implementation with model parsing and improved CLI options ([7956708](https://github.com/Metroxe/ouroboros/commit/7956708e95c89299551b9ce3ea91ebffca6a9e3b))
+
 ## [0.4.0](https://github.com/Metroxe/ouroboros/compare/v0.3.0...v0.4.0) (2026-01-22)
 
 
