@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.1](https://github.com/Metroxe/ouroboros/compare/v0.5.0...v0.5.1) (2026-01-22)
+
+
+### Bug Fixes
+
+* improve model parsing logic in cursor.ts and enhance related tests ([24d667e](https://github.com/Metroxe/ouroboros/commit/24d667ee25b4681a4f773aa54f2897fff90a2b1f))
+
 ## [0.5.0](https://github.com/Metroxe/ouroboros/compare/v0.4.0...v0.5.0) (2026-01-22)
 
 
