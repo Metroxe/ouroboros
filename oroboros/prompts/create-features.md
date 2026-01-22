@@ -58,7 +58,6 @@ Document your findings for use in the technical approach sections of feature PRD
 Review the functional requirements from `requirements.md` and identify distinct units of work. Consider:
 
 - Natural boundaries between different pieces of functionality
-- Dependencies between components
 - User-facing vs. backend work
 - Data models, APIs, and UI as separate concerns where appropriate
 
@@ -80,16 +79,9 @@ Break the epic into features following these guidelines:
 
 **Ordering:**
 - Number features in implementation order (01, 02, 03, etc.)
-- Earlier features should not depend on later ones
+- Features are always sequential: 01, then 02, then 03, etc.
 - Foundation/infrastructure features come first
 - User-facing features typically come last
-
-## Step 3: Map Dependencies
-
-For each feature, identify:
-
-- **Requires:** Which features must be completed before this one can start
-- **Enables:** Which features depend on this one being complete
 
 # PHASE 3: Create Feature Structure
 
@@ -118,11 +110,6 @@ For each feature, write a PRD at `{epic-path}/features/{NN}-{feature-name}/prd.m
 ## Overview
 
 {1-2 sentence summary of what this feature accomplishes and why it matters}
-
-## Dependencies
-
-- **Requires:** {List of feature numbers/names that must be completed first, or "None"}
-- **Enables:** {List of feature numbers/names that depend on this one, or "None"}
 
 ## Functional Requirements
 
@@ -156,39 +143,37 @@ Write exhaustive, unambiguous criteria. Leave nothing to interpretation. Each cr
 
 # PHASE 4: Generate Features Index
 
-After creating all feature PRDs, generate a summary file at `{epic-path}/features-index.md`:
+After creating all feature PRDs, generate a summary file at `{epic-path}/features-index.yml`:
 
-```markdown
-# Features Index: {Epic Name}
+```yaml
+epic_name: {Epic Name}
+epic_path: {epic-path}
+generated: {YYYY-MM-DD}
+total_features: {N}
 
-**Epic Path:** {epic-path}
-**Generated:** {YYYY-MM-DD}
-**Total Features:** {N}
+features:
+  - number: "01"
+    name: {feature-name}
+    path: features/01-{feature-name}/prd.md
+    description: {Brief summary}
+    completed: false
+  - number: "02"
+    name: {feature-name}
+    path: features/02-{feature-name}/prd.md
+    description: {Brief summary}
+    completed: false
+  # ... repeat for each feature
 
-## Implementation Order
+technical_overview:
+  shared_patterns:
+    - {Patterns, utilities, or approaches used across multiple features}
+  key_integration_points:
+    - {External systems, APIs, or services features integrate with}
+  reusable_components:
+    - {Existing codebase components that features will leverage}
 
-| # | Feature | Description | Dependencies |
-|---|---------|-------------|--------------|
-| 01 | [{feature-name}](features/01-{feature-name}/prd.md) | {Brief summary} | None |
-| 02 | [{feature-name}](features/02-{feature-name}/prd.md) | {Brief summary} | 01 |
-
-## Technical Overview
-
-### Shared Patterns
-
-- {Patterns, utilities, or approaches used across multiple features}
-
-### Key Integration Points
-
-- {External systems, APIs, or services features integrate with}
-
-### Reusable Components Identified
-
-- {Existing codebase components that features will leverage}
-
-## Notes
-
-{Any additional context, risks, or considerations for implementation}
+notes: |
+  {Any additional context, risks, or considerations for implementation}
 ```
 
 # Completion
@@ -204,7 +189,7 @@ Created {N} feature(s):
 ...
 
 Files created:
-- {epic-path}/features-index.md
+- {epic-path}/features-index.yml
 - {epic-path}/features/01-{feature-name}/prd.md
 - {epic-path}/features/02-{feature-name}/prd.md
 ...

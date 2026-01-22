@@ -98,7 +98,7 @@ Before implementing, read these files to understand the context:
 1. `{feature-path}/prd.md` - Feature requirements and acceptance criteria
 2. `{feature-path}/tasks.md` - Full task list showing what came before and after this task group
 3. `{epic-path}/requirements.md` - Epic context and scope
-4. `{epic-path}/features-index.md` - Where this feature fits in the epic's sequence
+4. `{epic-path}/features-index.yml` - Where this feature fits in the epic's sequence
 5. `oroboros/reference/tech-stack.md` - Technical patterns and conventions
 6. `oroboros/reference/gotchas.md` - Known pitfalls to avoid
 7. `{feature-path}/development-notes.md` - Notes from previous task groups
@@ -167,6 +167,26 @@ Append a section to `{feature-path}/development-notes.md`:
 
 If you do add a gotcha, append it to `oroboros/reference/gotchas.md` with a brief, actionable description.
 ```
+
+---
+
+**For the final task group only**, append this additional step to the "After Implementation" section:
+
+````markdown
+### 5. Mark Feature Complete
+
+This is the final task group for this feature. Update the feature's completion status in `{epic-path}/features-index.yml`:
+
+Find this feature's entry and set `completed: true`:
+
+```yaml
+  - number: "{NN}"
+    name: {feature-name}
+    path: features/{NN}-{feature-name}/prd.md
+    description: {description}
+    completed: true  # <- Change from false to true
+```
+````
 
 ---
 
