@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.0](https://github.com/Metroxe/ouroboros/compare/v0.5.1...v0.6.0) (2026-01-22)
+
+
+### Features
+
+* enhance git functionality and agent cursor with loop detection and formatting improvements ([860c64b](https://github.com/Metroxe/ouroboros/commit/860c64b9e818c3ca3a87e1f93e5b8b321d069daa))
+
 ## [0.5.1](https://github.com/Metroxe/ouroboros/compare/v0.5.0...v0.5.1) (2026-01-22)
 
 
