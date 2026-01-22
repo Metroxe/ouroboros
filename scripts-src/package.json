@@ -8,10 +8,12 @@
     "test": "bun test",
     "test:spec": "bun test tests/spec",
     "test:e2e": "bun test tests/e2e/install.test.ts",
-    "test:e2e:runtime": "bun test tests/e2e/runtime.test.ts"
+    "test:e2e:runtime": "bun test tests/e2e/runtime.test.ts",
+    "test:e2e:implement": "bun test tests/e2e/implement-epic.test.ts"
   },
   "dependencies": {
-    "@clack/prompts": "^0.9.1"
+    "@clack/prompts": "^0.9.1",
+    "yaml": "^2.7.0"
   },
   "devDependencies": {
     "@types/bun": "^1.2.4",

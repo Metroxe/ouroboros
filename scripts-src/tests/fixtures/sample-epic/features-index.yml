@@ -1,0 +1,29 @@
+epic_name: Bash Utility Scripts
+epic_path: oroboros/epics/2025-01-21-bash-utility-scripts
+generated: "2025-01-21"
+total_features: 2
+
+features:
+  - number: "01"
+    name: backup-script
+    path: features/01-backup-script/prd.md
+    description: Create a file backup script with timestamped directories
+    completed: false
+  - number: "02"
+    name: cleanup-script
+    path: features/02-cleanup-script/prd.md
+    description: Create a cleanup script for temporary files and build artifacts
+    completed: false
+
+technical_overview:
+  shared_patterns:
+    - Bash argument parsing with getopts
+    - Color output helpers
+    - Error handling functions
+  key_integration_points:
+    - File system operations
+  reusable_components:
+    - Common bash helper functions
+
+notes: |
+  Both scripts should follow a consistent style and share common utility functions.
