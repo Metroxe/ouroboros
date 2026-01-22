@@ -6,79 +6,76 @@ import { describe, test, expect } from "bun:test";
 import { parseModelsOutput, cursorRuntime } from "../../../lib/agent/cursor.js";
 
 describe("parseModelsOutput", () => {
-  test("parses typical agent models output", () => {
-    const output = `Available models:
----
-  1) claude-sonnet-4-20250514 - Claude Sonnet 4
-  2) claude-opus-4-20250514 - Claude Opus 4
-  3) gpt-4o - GPT-4o
-  4) o3 - O3
-  5) o3-mini - O3 Mini
-  6) deepseek-r1 - DeepSeek R1
----
-Tip: Use --model <id> to select a model`;
+  test("parses actual agent models output format", () => {
+    const output = `Available models
+
+auto - Auto
+composer-1 - Composer 1
+gpt-5.2-codex - GPT-5.2 Codex  (current)
+opus-4.5-thinking - Claude 4.5 Opus (Thinking)  (default)
+sonnet-4.5 - Claude 4.5 Sonnet
+grok - Grok
+
+Tip: use --model <id> (or /model <id> in interactive mode) to switch.`;
 
     const models = parseModelsOutput(output);
 
     expect(models).toHaveLength(6);
     expect(models[0]).toEqual({
-      id: "claude-sonnet-4-20250514",
-      name: "Claude Sonnet 4",
-      description: "Claude Sonnet 4",
+      id: "auto",
+      name: "Auto",
+      description: "Auto",
     });
     expect(models[1]).toEqual({
-      id: "claude-opus-4-20250514",
-      name: "Claude Opus 4",
-      description: "Claude Opus 4",
+      id: "composer-1",
+      name: "Composer 1",
+      description: "Composer 1",
     });
     expect(models[2]).toEqual({
-      id: "gpt-4o",
-      name: "GPT-4o",
-      description: "GPT-4o",
+      id: "gpt-5.2-codex",
+      name: "GPT-5.2 Codex  (current)",
+      description: "GPT-5.2 Codex  (current)",
+    });
+    expect(models[3]).toEqual({
+      id: "opus-4.5-thinking",
+      name: "Claude 4.5 Opus (Thinking)  (default)",
+      description: "Claude 4.5 Opus (Thinking)  (default)",
     });
   });
 
-  test("parses output with asterisk for selected model", () => {
+  test("parses numbered format with asterisk", () => {
     const output = `Available models:
-  1) claude-sonnet-4-20250514 - Claude Sonnet 4
+  1) claude-sonnet-4 - Claude Sonnet 4
 * 2) gpt-4o - GPT-4o (selected)
   3) o3 - O3`;
 
     const models = parseModelsOutput(output);
 
     expect(models).toHaveLength(3);
-    expect(models[0].id).toBe("claude-sonnet-4-20250514");
+    expect(models[0].id).toBe("claude-sonnet-4");
     expect(models[1].id).toBe("gpt-4o");
     expect(models[2].id).toBe("o3");
   });
 
-  test("handles models without descriptions", () => {
-    const output = `  1) some-model-id
-  2) another-model`;
+  test("skips lines without separator", () => {
+    const output = `Available models
+auto - Auto
+some-invalid-line-without-separator
+gpt-4o - GPT-4o`;
 
     const models = parseModelsOutput(output);
 
     expect(models).toHaveLength(2);
-    expect(models[0]).toEqual({
-      id: "some-model-id",
-      name: "some-model-id",
-      description: undefined,
-    });
-    expect(models[1]).toEqual({
-      id: "another-model",
-      name: "another-model",
-      description: undefined,
-    });
+    expect(models[0].id).toBe("auto");
+    expect(models[1].id).toBe("gpt-4o");
   });
 
   test("skips empty lines and headers", () => {
     const output = `
-Available models:
----
+Available models
 
-  1) model-a - Model A
+model-a - Model A
 
----
 Tip: something`;
 
     const models = parseModelsOutput(output);
@@ -93,7 +90,7 @@ Tip: something`;
   });
 
   test("returns empty array for input with only headers", () => {
-    const output = `Available models:
+    const output = `Available models
 ---
 Tip: Use --model to select`;
 
@@ -102,8 +99,8 @@ Tip: Use --model to select`;
   });
 
   test("handles thinking model format", () => {
-    const output = `  8) opus-4.5-thinking - Claude 4.5 Opus (Thinking)
-  9) sonnet-4-thinking - Claude Sonnet 4 (Thinking)`;
+    const output = `opus-4.5-thinking - Claude 4.5 Opus (Thinking)
+sonnet-4-thinking - Claude Sonnet 4 (Thinking)`;
 
     const models = parseModelsOutput(output);
 
@@ -115,8 +112,8 @@ Tip: Use --model to select`;
     });
   });
 
-  test("handles various whitespace formats", () => {
-    const output = `   1)   claude-sonnet   -   Claude Sonnet   
+  test("handles numbered prefix format", () => {
+    const output = `  1) claude-sonnet - Claude Sonnet
 2) gpt-4o - GPT-4o`;
 
     const models = parseModelsOutput(output);

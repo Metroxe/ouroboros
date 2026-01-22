@@ -14,37 +14,47 @@ import type { LLMRuntime, Model, PromptOptions, PromptResult } from "./types.js"
 /**
  * Parse models from `agent models` command output
  * Exported for testing
+ *
+ * Handles formats like:
+ *   - "auto - Auto"
+ *   - "gpt-5.2-codex - GPT-5.2 Codex  (current)"
+ *   - "  8) opus-4.5-thinking - Claude 4.5 Opus (Thinking)"
  */
 export function parseModelsOutput(stdout: string): Model[] {
   const models: Model[] = [];
   const lines = stdout.split("\n");
 
   for (const line of lines) {
-    // Skip header/separator lines
+    const trimmed = line.trim();
+
+    // Skip empty lines and header/footer lines
     if (
-      !line ||
-      line.includes("Available") ||
-      line.includes("---") ||
-      line.includes("Tip:")
+      !trimmed ||
+      trimmed.startsWith("Available") ||
+      trimmed.startsWith("---") ||
+      trimmed.startsWith("Tip:")
     ) {
       continue;
     }
 
-    // Extract model info from lines like: "  8) opus-4.5-thinking - Claude 4.5 Opus (Thinking)"
-    const cleaned = line.replace(/^[\s\d\)\-*]*/, "").trim();
-    if (cleaned) {
-      // Split on " - " to separate ID from description
-      const parts = cleaned.split(" - ");
-      const id = parts[0]?.trim();
-      const description = parts[1]?.trim();
+    // Remove optional leading number prefix like "8) " or "* 8) "
+    const withoutPrefix = trimmed.replace(/^[*\s]*\d+\)\s*/, "");
 
-      if (id) {
-        models.push({
-          id,
-          name: description || id,
-          description,
-        });
-      }
+    // Split on " - " to separate ID from description
+    const separatorIndex = withoutPrefix.indexOf(" - ");
+    if (separatorIndex === -1) {
+      continue; // No separator found, skip this line
+    }
+
+    const id = withoutPrefix.slice(0, separatorIndex).trim();
+    const description = withoutPrefix.slice(separatorIndex + 3).trim();
+
+    if (id) {
+      models.push({
+        id,
+        name: description || id,
+        description: description || undefined,
+      });
     }
   }
 
