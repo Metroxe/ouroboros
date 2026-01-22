@@ -320,3 +320,39 @@ export function getDefaultBranch(cwd?: string): string {
 
   return "main"; // Default fallback
 }
+
+/**
+ * Get the current HEAD commit hash
+ */
+export function getLastCommitHash(cwd?: string): string | null {
+  const result = gitCommand(["rev-parse", "HEAD"], cwd);
+  return result.success ? result.stdout : null;
+}
+
+/**
+ * Reset the working tree to a specific ref (hard reset)
+ * This discards all uncommitted changes
+ */
+export function resetHard(ref: string = "HEAD", cwd?: string): GitResult {
+  return gitCommand(["reset", "--hard", ref], cwd);
+}
+
+/**
+ * Clean untracked files and directories
+ */
+export function cleanUntracked(cwd?: string): GitResult {
+  return gitCommand(["clean", "-fd"], cwd);
+}
+
+/**
+ * Reset to a commit and clean all untracked files
+ * Useful for completely restoring to a previous state
+ */
+export function resetAndClean(ref: string = "HEAD", cwd?: string): {
+  resetResult: GitResult;
+  cleanResult: GitResult;
+} {
+  const resetResult = resetHard(ref, cwd);
+  const cleanResult = cleanUntracked(cwd);
+  return { resetResult, cleanResult };
+}

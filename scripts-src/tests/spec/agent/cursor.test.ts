@@ -3,7 +3,13 @@
  */
 
 import { describe, test, expect } from "bun:test";
-import { parseModelsOutput, cursorRuntime } from "../../../lib/agent/cursor.js";
+import {
+  parseModelsOutput,
+  cursorRuntime,
+  hashToolCall,
+  hasRepeatedItems,
+  extractErrorFromResult,
+} from "../../../lib/agent/cursor.js";
 
 describe("parseModelsOutput", () => {
   test("parses actual agent models output format", () => {
@@ -161,5 +167,143 @@ describe("cursorRuntime", () => {
   test("isAvailable returns boolean", async () => {
     const available = await cursorRuntime.isAvailable();
     expect(typeof available).toBe("boolean");
+  });
+});
+
+describe("hashToolCall", () => {
+  test("generates consistent hash for same inputs", () => {
+    const hash1 = hashToolCall("Edit", { path: "/test/file.ts", old: "a", new: "b" });
+    const hash2 = hashToolCall("Edit", { path: "/test/file.ts", old: "a", new: "b" });
+    expect(hash1).toBe(hash2);
+  });
+
+  test("generates different hash for different tool names", () => {
+    const hash1 = hashToolCall("Edit", { path: "/test/file.ts" });
+    const hash2 = hashToolCall("Read", { path: "/test/file.ts" });
+    expect(hash1).not.toBe(hash2);
+  });
+
+  test("generates different hash for different args", () => {
+    const hash1 = hashToolCall("Edit", { path: "/test/file1.ts" });
+    const hash2 = hashToolCall("Edit", { path: "/test/file2.ts" });
+    expect(hash1).not.toBe(hash2);
+  });
+
+  test("returns 16 character hash", () => {
+    const hash = hashToolCall("Test", { foo: "bar" });
+    expect(hash).toHaveLength(16);
+  });
+
+  test("handles empty args", () => {
+    const hash = hashToolCall("Test", {});
+    expect(hash).toHaveLength(16);
+  });
+
+  test("handles complex nested args", () => {
+    const hash = hashToolCall("Shell", {
+      command: "npm test",
+      options: { cwd: "/path/to/dir", env: { NODE_ENV: "test" } },
+    });
+    expect(hash).toHaveLength(16);
+  });
+});
+
+describe("hasRepeatedItems", () => {
+  test("returns false for empty array", () => {
+    expect(hasRepeatedItems([], 3)).toBe(false);
+  });
+
+  test("returns false when array is shorter than threshold", () => {
+    expect(hasRepeatedItems(["a", "a"], 3)).toBe(false);
+  });
+
+  test("returns true when last N items are identical", () => {
+    expect(hasRepeatedItems(["a", "b", "c", "c", "c"], 3)).toBe(true);
+  });
+
+  test("returns false when last N items are not identical", () => {
+    expect(hasRepeatedItems(["a", "b", "c", "c", "d"], 3)).toBe(false);
+  });
+
+  test("returns true for exact threshold match", () => {
+    expect(hasRepeatedItems(["x", "x", "x"], 3)).toBe(true);
+  });
+
+  test("ignores earlier duplicates when checking last N", () => {
+    expect(hasRepeatedItems(["a", "a", "a", "b", "c", "d"], 3)).toBe(false);
+  });
+
+  test("works with threshold of 1", () => {
+    expect(hasRepeatedItems(["a", "b", "c"], 1)).toBe(true);
+  });
+
+  test("works with various thresholds", () => {
+    const items = ["a", "b", "b", "b", "b"];
+    expect(hasRepeatedItems(items, 2)).toBe(true);
+    expect(hasRepeatedItems(items, 3)).toBe(true);
+    expect(hasRepeatedItems(items, 4)).toBe(true);
+    expect(hasRepeatedItems(items, 5)).toBe(false); // only 4 b's at end
+  });
+});
+
+describe("extractErrorFromResult", () => {
+  test("returns null for null input", () => {
+    expect(extractErrorFromResult(null)).toBeNull();
+  });
+
+  test("returns null for undefined input", () => {
+    expect(extractErrorFromResult(undefined)).toBeNull();
+  });
+
+  test("returns null for non-object input", () => {
+    expect(extractErrorFromResult("string")).toBeNull();
+    expect(extractErrorFromResult(123)).toBeNull();
+  });
+
+  test("extracts modelVisibleError from nested error object", () => {
+    const result = {
+      error: {
+        path: "",
+        error: "Incorrect tool arguments",
+        modelVisibleError: "old_string and new_string are exactly the same",
+      },
+    };
+    expect(extractErrorFromResult(result)).toBe(
+      "old_string and new_string are exactly the same"
+    );
+  });
+
+  test("extracts error string from nested error object when modelVisibleError not present", () => {
+    const result = {
+      error: {
+        error: "Some error message",
+      },
+    };
+    expect(extractErrorFromResult(result)).toBe("Some error message");
+  });
+
+  test("extracts direct error string", () => {
+    const result = {
+      error: "Direct error message",
+    };
+    expect(extractErrorFromResult(result)).toBe("Direct error message");
+  });
+
+  test("returns null when no error field", () => {
+    const result = {
+      success: true,
+      content: "some content",
+    };
+    expect(extractErrorFromResult(result)).toBeNull();
+  });
+
+  test("prefers modelVisibleError over error string", () => {
+    const result = {
+      error: {
+        error: "Technical error",
+        modelVisibleError: "User-friendly error",
+      },
+    };
+    expect(extractErrorFromResult(result)).toBe("User-friendly error");
   });
 });

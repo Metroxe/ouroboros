@@ -71,6 +71,8 @@ export interface PromptResult {
   tokenUsage?: TokenUsage;
   /** Total cost in USD if available (Claude Code) */
   costUsd?: number;
+  /** Whether a loop was detected (repeated failing tool calls) */
+  loopDetected?: boolean;
 }
 
 /**

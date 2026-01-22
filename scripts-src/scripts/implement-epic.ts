@@ -71,6 +71,8 @@ import {
   isGhAvailable,
   getDefaultBranch,
   fetch,
+  getLastCommitHash,
+  resetAndClean,
 } from "../lib/git.js";
 
 // ============================================================================
@@ -224,6 +226,16 @@ function verbose(message: string): void {
 // Prompt Execution
 // ============================================================================
 
+/**
+ * Custom error class for loop detection
+ */
+class LoopDetectedError extends Error {
+  constructor(stepName: string) {
+    super(`Loop detected during: ${stepName}`);
+    this.name = "LoopDetectedError";
+  }
+}
+
 async function runPrompt(
   runtime: LLMRuntime,
   model: string,
@@ -235,6 +247,10 @@ async function runPrompt(
   p.log.step(`Step ${tokenStats.stepCount}: ${stepName}`);
   verbose(`Using ${runtime.displayName} with model ${model}`);
   verbose(`Prompt: ${prompt.substring(0, 200)}...`);
+
+  // Get commit hash before running (for potential rollback on loop detection)
+  const commitHashBefore = config.commitEach ? getLastCommitHash() : null;
+  verbose(`Commit hash before: ${commitHashBefore || "none"}`);
 
   const result = await runtime.runPrompt(prompt, {
     model,
@@ -264,6 +280,30 @@ async function runPrompt(
         tokenStats.totalInputTokens + tokenStats.totalOutputTokens
       )} tokens`
     );
+  }
+
+  // Handle loop detection
+  if (result.loopDetected) {
+    p.log.warn("Loop detected - agent was making repeated failing tool calls");
+
+    if (config.commitEach && commitHashBefore) {
+      p.log.info(`Resetting to last commit: ${commitHashBefore.substring(0, 8)}...`);
+      const { resetResult, cleanResult } = resetAndClean(commitHashBefore);
+
+      if (resetResult.success) {
+        p.log.success("Successfully reset to last commit");
+      } else {
+        p.log.error(`Failed to reset: ${resetResult.stderr}`);
+      }
+
+      if (!cleanResult.success) {
+        p.log.warn(`Failed to clean untracked files: ${cleanResult.stderr}`);
+      }
+    } else {
+      p.log.info("No commit to reset to - changes from this step may be partial");
+    }
+
+    throw new LoopDetectedError(stepName);
   }
 
   if (!result.success) {
@@ -935,6 +975,19 @@ async function main(): Promise<void> {
 
     if (config?.verbose) {
       console.error(err.stack);
+    }
+
+    // Provide specific guidance for loop detection
+    if (err instanceof LoopDetectedError) {
+      p.log.info("The agent got stuck in a loop making repeated failing tool calls.");
+      p.log.info("This usually happens when the agent can't figure out how to proceed.");
+      if (config?.commitEach) {
+        p.log.info("Changes have been reset to the last commit.");
+      }
+      p.log.info("Suggestions:");
+      p.log.message("  1. Review the step that failed and simplify the task");
+      p.log.message("  2. Try a different model (e.g., claude-opus-4 for complex tasks)");
+      p.log.message("  3. Break down the task into smaller steps manually");
     }
 
     p.log.info("You can resume by running the script again.");

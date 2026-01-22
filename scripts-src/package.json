@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@clack/prompts": "^0.9.1",
+    "chalk": "^5.4.1",
     "yaml": "^2.7.0"
   },
   "devDependencies": {

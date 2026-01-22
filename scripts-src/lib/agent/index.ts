@@ -26,6 +26,13 @@ export { claudeRuntime } from "./claude.js";
 export { cursorRuntime } from "./cursor.js";
 export { opencodeRuntime } from "./opencode.js";
 
+// Export formatting helpers
+export {
+  formatToolUse,
+  formatToolResult,
+  formatToolCallInline,
+} from "./formatting.js";
+
 /**
  * Map of runtime names to implementations
  */
