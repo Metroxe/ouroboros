@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.4.0](https://github.com/Metroxe/ouroboros/compare/v0.3.0...v0.4.0) (2026-01-22)
+
+
+### Features
+
+* add testing scripts to package.json for improved test management ([d50bf45](https://github.com/Metroxe/ouroboros/commit/d50bf45b84e01a110d20dd49fbc581a07787367b))
+* enhance package.json and index.ts with new dependencies and exports ([4294b97](https://github.com/Metroxe/ouroboros/commit/4294b975d3e6979540452e47e0d62f873e6d86c5))
+
+
+### Bug Fixes
+
+* update feature documentation to use YAML format for features index ([83a108d](https://github.com/Metroxe/ouroboros/commit/83a108d92e7d8b4203e17a185d37f279726185ed))
+
 ## [0.3.0](https://github.com/Metroxe/ouroboros/compare/v0.2.1...v0.3.0) (2026-01-21)
 
 
