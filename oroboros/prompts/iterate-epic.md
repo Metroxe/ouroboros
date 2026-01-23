@@ -22,16 +22,21 @@ Example: oroboros/epics/2025-01-19-user-authentication
 
 ## Step 2: Read Context Files
 
-Read the following files to understand the epic and product context:
+Read these files to understand the epic and product context:
 
+**Always read:**
 1. `{epic-path}/requirements.md` - Original epic requirements
-2. `{epic-path}/features-index.yml` - List of implemented features
-3. All feature PRDs at `{epic-path}/features/*/prd.md` - Feature details
-4. `{epic-path}/iterations/iterations-index.md` - Summary of previous iterations (if exists)
-5. All previous iteration files at `{epic-path}/iterations/*.md` - Past changes and decisions
-6. `oroboros/reference/product-description.md` - Product mission and users
-7. `oroboros/reference/tech-stack.md` - Technologies and patterns
-8. `oroboros/reference/gotchas.md` - Known pitfalls to avoid
+2. `{epic-path}/features-index.yml` - Summary of all features (use this to identify relevant features)
+3. `{epic-path}/iterations/iterations-index.md` - Summary of previous iterations (if exists)
+4. `oroboros/reference/product-description.md` - Product mission and users
+5. `oroboros/reference/tech-stack.md` - Technologies and patterns
+6. `oroboros/reference/gotchas.md` - Known pitfalls to avoid
+
+**Read selectively based on relevance:**
+- Feature PRDs at `{epic-path}/features/{NN}-{name}/prd.md` - Only read the full PRD for features that seem relevant to the iteration based on the features-index.yml summary
+- Previous iteration files at `{epic-path}/iterations/*.md` - Only read full iteration files that seem relevant based on the iterations-index.md summary
+
+This keeps context focused. You can always read additional files later if needed during the conversation.
 
 ## Step 3: Search Codebase
 
@@ -152,9 +157,44 @@ After each significant piece of work, update the iteration file. Example:
 - Implemented rate limit of 3 requests per hour per email to prevent enumeration
 ```
 
-# PHASE 4: Finalize
+# PHASE 4: Test Implementation
 
-When the iteration is complete:
+Before finalizing, verify the implementation works:
+
+## Step 1: Identify Testing Approach
+
+Check `oroboros/reference/tech-stack.md` for testing conventions. Look for:
+- Test runner (Jest, Vitest, pytest, etc.)
+- Test directory structure
+- How to run tests
+
+## Step 2: Run Tests
+
+**If the project has automated testing:**
+1. Run the existing test suite to check for regressions
+2. If you added new functionality, write tests following the project's patterns
+3. Run tests and fix any failures
+
+**If no automated testing exists:**
+1. Manually verify the changes work as expected
+2. Test edge cases mentioned in the iteration request
+3. Document what was tested in the "Notes" section of the iteration file
+
+## Step 3: Document Test Results
+
+Add a "Testing" section to the iteration file:
+
+```markdown
+## Testing
+
+- Ran existing test suite: {pass/fail, any notes}
+- New tests added: {list of test files, or "N/A"}
+- Manual verification: {what was checked}
+```
+
+# PHASE 5: Finalize
+
+When testing is complete:
 
 1. **Review the iteration file** - Ensure all sections are filled out
 2. **Update the iterations-index.md** summary if needed
