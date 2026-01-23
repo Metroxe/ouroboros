@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.1](https://github.com/Metroxe/ouroboros/compare/v0.6.0...v0.6.1) (2026-01-23)
+
+
+### Bug Fixes
+
+* iterate epic prompt ([745a62d](https://github.com/Metroxe/ouroboros/commit/745a62d18e86c2db927c16f74ce5750ee8ac9917))
+
 ## [0.6.0](https://github.com/Metroxe/ouroboros/compare/v0.5.1...v0.6.0) (2026-01-22)
 
 
