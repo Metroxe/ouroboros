@@ -37,7 +37,7 @@ Determine the epic path from the feature path (parent of `features/` directory).
 Read the following files:
 
 1. `{epic-path}/requirements.md` - Full epic requirements and scope
-2. `{epic-path}/features-index.md` - Understand where this feature fits in the sequence and its dependencies
+2. `{epic-path}/features-index.yml` - Understand where this feature fits in the sequence, its dependencies, and implementation notes from completed earlier features
 
 ## Step 4: Read Feature Context
 
@@ -49,7 +49,39 @@ Read `{feature-path}/prd.md` to understand:
 - Acceptance criteria to satisfy
 - What is explicitly out of scope
 
-## Step 5: Full Codebase Search
+## Step 5: Analyze Feature Connections
+
+Review the PRD's "Feature Connections" section and gather context from related features.
+
+**IMPORTANT: Features are implemented sequentially. When implementing feature N, all earlier features (01 through N-1) are already complete. Later features do not exist yet. You can only integrate with earlier features.**
+
+**5a. Read Related Feature PRDs:**
+For each feature listed in "Depends On" (these will always be earlier/lower-numbered features):
+- Read that feature's PRD to understand what it provides
+- Note the shared components, APIs, or patterns it creates
+- Understand the interfaces you'll need to integrate with
+
+**5b. Read Implementation Notes from features-index.yml:**
+Check `{epic-path}/features-index.yml` for earlier completed features:
+- Look at the `implementation_notes` field for each completed earlier feature
+- Note what was actually implemented (may differ from original PRD)
+- Identify shared components, their locations, and how to use them
+- Note any patterns or conventions established
+
+**5c. Identify Integration Tasks:**
+Based on connection analysis, identify:
+- Shared components to USE (already created by earlier features)
+- Shared components to CREATE (this feature is first to need them, for use by later features)
+- Integration points with earlier features' code
+- Patterns to follow for consistency with earlier features
+
+**5d. Document Connection Context:**
+Create a summary of:
+- What existing code to import/use from earlier features (already available)
+- What new shared components this feature must create (for later features to use)
+- How this feature's outputs will be used by later features (based on PRD's "Provides To" section)
+
+## Step 6: Full Codebase Search
 
 Search the codebase comprehensively to gather implementation context:
 
@@ -68,36 +100,36 @@ Search the codebase comprehensively to gather implementation context:
 - Document the patterns used: imports, exports, error handling, logging
 - Note naming conventions for files, functions, classes, and variables
 
-## Step 6: Build Dependency Map
+## Step 7: Build Dependency Map
 
 Construct a dependency map of all files involved. Execute these steps in order:
 
-**6a. Identify Entry Points:**
+**7a. Identify Entry Points:**
 From the PRD's "Files to Create/Modify" section, list all files explicitly mentioned as starting points.
 
-**6b. Trace Import Chains:**
+**7b. Trace Import Chains:**
 For each file that will be modified:
 - Read the file and extract all imports/requires
 - For each import, determine if that file will also need changes
 - Recursively trace until you reach stable boundaries (files that won't change)
 
-**6c. Identify Dependents (Reverse Dependencies):**
+**7c. Identify Dependents (Reverse Dependencies):**
 Search the codebase for files that import/require the files being modified:
 - Use grep/search for import statements referencing the target files
 - These files may need updates if interfaces/exports change
 
-**6d. Categorize Each File:**
+**7d. Categorize Each File:**
 - `CREATE`: New files to be created
 - `MODIFY`: Existing files requiring changes
 - `REFERENCE`: Files to read for patterns/context but not modify
 - `DEPENDENT`: Files that import modified files (may need updates)
 
-**6e. Determine Creation Order:**
+**7e. Determine Creation Order:**
 Based on import dependencies, establish the order files must be created/modified to avoid import errors:
 - Files with no dependencies on other new files come first
 - Files depending on other new files come after their dependencies
 
-**6f. Document the Map:**
+**7f. Document the Map:**
 You will output this map in the tasks.md file header.
 
 # PHASE 2: Generate Testing Plan
@@ -150,12 +182,15 @@ Generate Task Group 1 as the Testing Plan with:
 
 Break the implementation into logical units based on the tech stack and feature type. Common logical units include:
 
+- **Shared Components Layer**: Utilities, helpers, or base classes that this feature creates for use by later features (check PRD's "Feature Connections" section)
 - **Data Layer**: Models, schemas, migrations, database setup
 - **Service Layer**: Business logic, utilities, helpers
 - **API Layer**: Routes, controllers, endpoints, middleware
 - **UI Layer**: Components, pages, styles
-- **Integration Layer**: Connecting pieces, wiring up imports/exports
+- **Integration Layer**: Connecting pieces, wiring up imports/exports, integrating with earlier features
 - **Configuration**: Environment variables, feature flags, settings
+
+**Important:** If the PRD's "Feature Connections" section indicates this feature should CREATE shared components, include a dedicated task group for creating those components early in the implementation order (typically after Testing Plan but before feature-specific code).
 
 ## Step 2: Apply Sizing Constraints
 
@@ -351,6 +386,33 @@ Write the complete task list to `{feature-path}/tasks.md` using this structure:
 
 [Repeat for each manual test]
 ```
+
+## Step 3: Add Features Index Update Task
+
+The final task group should include updating `{epic-path}/features-index.yml` to document what was created for use by later features. Add this as the last sub-task in the Final Verification task group:
+
+```markdown
+- [ ] N.X Update features-index.yml with implementation notes
+  - File: `{epic-path}/features-index.yml`
+  - Find this feature's entry and add/update the `implementation_notes` field:
+    ```yaml
+    - number: "{NN}"
+      name: {feature-name}
+      # ... existing fields ...
+      completed: true
+      implementation_notes:
+        shared_components_created:
+          - path: {file-path}
+            description: {What it does and how to use it}
+        patterns_established:
+          - {Pattern or convention that later features should follow}
+        gotchas:
+          - {Any non-obvious implementation details or constraints}
+    ```
+  - This helps later features understand what was actually built (not just what was planned in the PRD)
+```
+
+Note: The `development-notes.md` file is for intra-feature communication (between task groups within this feature). The `implementation_notes` in features-index.yml is for cross-feature communication (helping later features integrate).
 
 # Completion
 

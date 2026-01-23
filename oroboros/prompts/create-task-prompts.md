@@ -170,14 +170,14 @@ If you do add a gotcha, append it to `oroboros/reference/gotchas.md` with a brie
 
 ---
 
-**For the final task group only**, append this additional step to the "After Implementation" section:
+**For the final task group only**, append these additional steps to the "After Implementation" section:
 
 ````markdown
-### 5. Mark Feature Complete
+### 5. Update features-index.yml for Later Features
 
-This is the final task group for this feature. Update the feature's completion status in `{epic-path}/features-index.yml`:
+Update `{epic-path}/features-index.yml` with implementation notes so later features know what was actually built:
 
-Find this feature's entry and set `completed: true`:
+Find this feature's entry and add the `implementation_notes` field:
 
 ```yaml
   - number: "{NN}"
@@ -185,7 +185,23 @@ Find this feature's entry and set `completed: true`:
     path: features/{NN}-{feature-name}/prd.md
     description: {description}
     completed: true  # <- Change from false to true
+    depends_on: [...]
+    provides: [...]
+    implementation_notes:
+      shared_components_created:
+        - path: {file-path-you-created}
+          description: {What it does and how to use it}
+      patterns_established:
+        - "{Any patterns or conventions you established that later features should follow}"
+      gotchas:
+        - "{Any non-obvious constraints or issues later features should know about}"
 ```
+
+**Important:** This is different from `development-notes.md`:
+- `development-notes.md` = communication between task groups *within this feature*
+- `implementation_notes` in features-index.yml = communication to *later features* in this epic
+
+If this feature created shared components or established patterns that later features will use, document them here so those features can integrate properly.
 ````
 
 ---

@@ -83,6 +83,38 @@ Break the epic into features following these guidelines:
 - Foundation/infrastructure features come first
 - User-facing features typically come last
 
+## Step 3: Analyze Cross-Feature Connections
+
+Before creating PRDs, analyze how features will connect to each other.
+
+**IMPORTANT: Features are implemented sequentially (01, then 02, then 03, etc.). A feature can ONLY depend on earlier features - never on later ones. When feature 02 is being implemented, feature 01 is already complete, but feature 03 does not exist yet.**
+
+**3a. Identify Dependencies (backward only):**
+For each feature, determine what it needs from earlier features:
+- Data models or schemas created by earlier features
+- APIs or services exposed by earlier features
+- Shared utilities or helper functions
+- UI components or patterns established earlier
+
+**3b. Identify What Each Feature Provides (to later features only):**
+For each feature, determine what it creates that later features will use:
+- Shared utilities, helpers, or base classes
+- APIs or services that other features will consume
+- Data models that other features will extend or reference
+- UI patterns or components for reuse
+
+**3c. Assign Shared Component Ownership:**
+When multiple features need the same shared component:
+- The first feature that needs it should CREATE it
+- Later features should USE it (not recreate it)
+- Document this clearly in each feature's PRD
+
+**3d. Document Connection Summary:**
+Create a mental map of feature connections to inform PRD writing:
+- Which features are independent (no connections)?
+- Which features form a dependency chain?
+- What shared components will be created and by which feature?
+
 # PHASE 3: Create Feature Structure
 
 For each feature identified in Phase 2, create the folder and PRD.
@@ -125,6 +157,25 @@ For each feature, write a PRD at `{epic-path}/features/{NN}-{feature-name}/prd.m
 - **Integration Points:** {APIs, services, databases, or components this feature integrates with}
 - **Key Implementation Details:** {Important technical decisions or approaches}
 
+## Feature Connections
+
+**Note:** Features are implemented sequentially. This feature can only depend on earlier features (lower numbers) and can only provide to later features (higher numbers).
+
+### Depends On (earlier features only)
+{List earlier features this feature depends on, or "None" if this is the first feature or fully independent}
+
+- **Feature {NN} ({feature-name}):** {What this feature needs from it - e.g., "shared utility functions for argument parsing", "user model and database schema"}
+
+### Provides To Later Features (higher-numbered features only)
+{List what this feature creates that later features will use, or "None" if nothing is shared}
+
+- **Feature {NN} ({feature-name}):** {What this feature provides - e.g., "color output helpers", "authentication middleware"}
+
+### Shared Components
+{List shared components this feature creates or uses}
+
+- `{path/to/component}`: **{CREATE | USE}** - {Brief description of the shared component and its purpose}
+
 ## Acceptance Criteria
 
 Write exhaustive, unambiguous criteria. Leave nothing to interpretation. Each criterion should specify exact behavior, inputs, outputs, and edge cases.
@@ -157,12 +208,31 @@ features:
     path: features/01-{feature-name}/prd.md
     description: {Brief summary}
     completed: false
+    depends_on: []  # First feature typically has no dependencies
+    provides:
+      - component: {shared-component-name}
+        description: {What it does}
+        used_by: ["02", "03"]  # Feature numbers that will use this
+    implementation_notes: null  # Populated after feature is implemented
   - number: "02"
     name: {feature-name}
     path: features/02-{feature-name}/prd.md
     description: {Brief summary}
     completed: false
+    depends_on: ["01"]  # List of feature numbers this depends on
+    provides: []  # Empty if this feature doesn't provide shared components
+    implementation_notes: null  # Populated after feature is implemented
   # ... repeat for each feature
+
+# After a feature is completed, implementation_notes is populated:
+# implementation_notes:
+#   shared_components_created:
+#     - path: scripts/lib/helpers.sh
+#       description: Color output and argument parsing utilities
+#   patterns_established:
+#     - "All scripts use getopts for argument parsing"
+#   gotchas:
+#     - "Must source helpers.sh before using color functions"
 
 technical_overview:
   shared_patterns:
