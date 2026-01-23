@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.2](https://github.com/Metroxe/ouroboros/compare/v0.6.1...v0.6.2) (2026-01-23)
+
+
+### Bug Fixes
+
+* date issue ([4d952f7](https://github.com/Metroxe/ouroboros/commit/4d952f7cbca914f0daf120fb5de1d9e91f574419))
+
 ## [0.6.1](https://github.com/Metroxe/ouroboros/compare/v0.6.0...v0.6.1) (2026-01-24)
 
 
