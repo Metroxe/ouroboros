@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.3](https://github.com/Metroxe/ouroboros/compare/v0.6.2...v0.6.3) (2026-01-23)
+
+
+### Bug Fixes
+
+* enhance feature creation guidelines with cross-feature analysis ([80214dd](https://github.com/Metroxe/ouroboros/commit/80214dd5456795e62df0fd7b64a7298c677e2271))
+
 ## [0.6.2](https://github.com/Metroxe/ouroboros/compare/v0.6.1...v0.6.2) (2026-01-23)
 
 
