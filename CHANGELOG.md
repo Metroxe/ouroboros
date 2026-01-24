@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.7.0](https://github.com/Metroxe/ouroboros/compare/v0.6.3...v0.7.0) (2026-01-24)
+
+
+### Features
+
+* add clarification step for epic requirements in iteration prompts ([e3f1add](https://github.com/Metroxe/ouroboros/commit/e3f1add6fb823647d2b1dbaff047d41935c23ecb))
+
 ## [0.6.3](https://github.com/Metroxe/ouroboros/compare/v0.6.2...v0.6.3) (2026-01-23)
 
 
