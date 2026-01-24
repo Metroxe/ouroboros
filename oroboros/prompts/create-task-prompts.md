@@ -202,6 +202,28 @@ Find this feature's entry and add the `implementation_notes` field:
 - `implementation_notes` in features-index.yml = communication to *later features* in this epic
 
 If this feature created shared components or established patterns that later features will use, document them here so those features can integrate properly.
+
+### 6. Update epic-index.md (If Epic Complete)
+
+Check `{epic-path}/features-index.yml` to see if ALL features in this epic now have `completed: true`.
+
+**If all features are complete:**
+
+Update `oroboros/reference/epic-index.md` to move this epic from "In Progress" to "Complete":
+
+1. Find the epic entry under `### In Progress`
+2. Remove it from that section
+3. Add it under `### Complete` with the completion date
+
+Example format for the completed epic entry:
+```markdown
+### Complete
+
+- **{epic-name}** (completed {YYYY-MM-DD}) - {brief description}
+  - Path: `{epic-path}`
+```
+
+**If NOT all features are complete:** Skip this step - the epic remains "In Progress".
 ````
 
 ---
