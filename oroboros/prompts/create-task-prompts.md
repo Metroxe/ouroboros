@@ -170,6 +170,32 @@ If you do add a gotcha, append it to `oroboros/reference/gotchas.md` with a brie
 
 ---
 
+**For the first task group of the first feature only** (i.e., feature `01-*` and task group `1-*`), prepend this section before "## Implementation Instructions":
+
+````markdown
+## Before Implementation
+
+### Update epic-index.md to In Progress
+
+This is the first task of the first feature, which means implementation is beginning. Update `oroboros/reference/epic-index.md` to move this epic from "Planning" to "In Progress":
+
+1. Find the epic entry under `### Planning`
+2. Remove it from that section
+3. Add it under `### In Progress`
+
+Example format:
+```markdown
+### In Progress
+
+- **{epic-name}** (started {YYYY-MM-DD}) - {brief description}
+  - Path: `{epic-path}`
+```
+
+After updating epic-index.md, proceed with the implementation instructions below.
+````
+
+---
+
 **For the final task group only**, append these additional steps to the "After Implementation" section:
 
 ````markdown
