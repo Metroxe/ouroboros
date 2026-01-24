@@ -50,6 +50,28 @@ Otherwise prompt the user: "What changes would you like to make to this epic?"
 
 **Wait for user response before continuing.**
 
+## Step 5: Clarify Requirements
+
+Before proceeding, review the user's description for any ambiguity. If any aspects are unclear or underspecified, ask clarifying questions.
+
+**Guidelines:**
+- Ask only if genuinely needed - don't add friction for straightforward requests
+- Frame questions with reasonable assumptions: "I'm assuming X, is that correct?"
+- Limit to 1-3 questions maximum
+- Make it easy to confirm with a simple "yes" or brief clarification
+
+**If questions are needed:**
+```
+Before I begin, I want to clarify a few things:
+
+1. [Question with assumption, if applicable]
+2. [Additional question if needed]
+
+Please confirm or clarify, then I'll proceed with the implementation.
+```
+
+**If the request is clear:** Proceed directly to Phase 2 without asking questions.
+
 # PHASE 2: Initialize Iteration File
 
 ## Step 1: Create Iteration File
@@ -115,8 +137,8 @@ Create or update `{epic-path}/iterations/iterations-index.md`:
 
 Quick reference for all iterations on this epic.
 
-| Date | Name | Type | Summary |
-|------|------|------|---------|
+| Date         | Name                           | Type   | Summary            |
+| ------------ | ------------------------------ | ------ | ------------------ |
 | {YYYY-MM-DD} | [{iteration-name}]({filename}) | {type} | {one-line summary} |
 ```
 
