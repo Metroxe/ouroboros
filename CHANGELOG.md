@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.7.2](https://github.com/Metroxe/ouroboros/compare/v0.7.1...v0.7.2) (2026-01-24)
+
+
+### Bug Fixes
+
+* add implementation instructions for first task group of a feature to update the epic-index.yml ([b284cde](https://github.com/Metroxe/ouroboros/commit/b284cde78d26e27f13f6f401d08a480f4bb64c8b))
+
 ## [0.7.1](https://github.com/Metroxe/ouroboros/compare/v0.7.0...v0.7.1) (2026-01-24)
 
 
