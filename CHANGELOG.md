@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.7.1](https://github.com/Metroxe/ouroboros/compare/v0.7.0...v0.7.1) (2026-01-24)
+
+
+### Bug Fixes
+
+* add missing step where it didn't update features-index ([9df48ac](https://github.com/Metroxe/ouroboros/commit/9df48ac9317427b554fe85dabeb55f453b58a8d5))
+
 ## [0.7.0](https://github.com/Metroxe/ouroboros/compare/v0.6.3...v0.7.0) (2026-01-24)
 
 
