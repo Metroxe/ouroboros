@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.8.0](https://github.com/Metroxe/ouroboros/compare/v0.7.2...v0.8.0) (2026-01-25)
+
+
+### Features
+
+* add verification guide generation to epic implementation process ([d081feb](https://github.com/Metroxe/ouroboros/commit/d081febd143bf207864f4ed6da0be2c3b0a5ec99))
+
 ## [0.7.2](https://github.com/Metroxe/ouroboros/compare/v0.7.1...v0.7.2) (2026-01-24)
 
 
