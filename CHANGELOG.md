@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.8.1](https://github.com/Metroxe/ouroboros/compare/v0.8.0...v0.8.1) (2026-01-25)
+
+
+### Bug Fixes
+
+* enhance verification guide with tips for analyzing code changes ([ccdd4f2](https://github.com/Metroxe/ouroboros/commit/ccdd4f2123e5e3b493307aff06fe5d5716de0137))
+* simplify verification guide for quicker testing ([0811068](https://github.com/Metroxe/ouroboros/commit/0811068736cf22323d80386e4c3a6574c93593ff))
+
 ## [0.8.0](https://github.com/Metroxe/ouroboros/compare/v0.7.2...v0.8.0) (2026-01-25)
 
 
