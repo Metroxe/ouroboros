@@ -11,7 +11,7 @@
  * 
  * File Categories:
  * - Framework files (always overwrite): prompts/*, scripts/*, .version
- * - User-generated (never touch): epics/*, reference/product-description.md, reference/tech-stack.md
+ * - User-generated (never touch): epics/*, sessions/*, reference/product-description.md, reference/tech-stack.md
  * - Scaffold files (create if missing): reference/epic-index.md, reference/gotchas.md
  */
 
@@ -73,6 +73,7 @@ const SCAFFOLD_FILES = [
 // User-generated paths that are never touched
 const USER_PATHS = [
   "epics",
+  "sessions",
   "reference/product-description.md",
   "reference/tech-stack.md",
 ];
@@ -98,6 +99,7 @@ async function performInstall(options: InstallOptions): Promise<void> {
   ensureDir(join(oroborosTarget, "prompts"));
   ensureDir(join(oroborosTarget, "reference"));
   ensureDir(join(oroborosTarget, "scripts"));
+  ensureDir(join(oroborosTarget, "sessions"));
   s.stop("Directory structure ready");
 
   // Step 2: Copy framework files (always overwrite)
@@ -129,9 +131,16 @@ async function performInstall(options: InstallOptions): Promise<void> {
   
   // Create .gitkeep in epics if empty
   const epicsDir = join(oroborosTarget, "epics");
-  const gitkeep = join(epicsDir, ".gitkeep");
-  if (!exists(gitkeep)) {
-    Bun.write(gitkeep, "");
+  const epicsGitkeep = join(epicsDir, ".gitkeep");
+  if (!exists(epicsGitkeep)) {
+    Bun.write(epicsGitkeep, "");
+  }
+  
+  // Create .gitkeep in sessions if empty
+  const sessionsDir = join(oroborosTarget, "sessions");
+  const sessionsGitkeep = join(sessionsDir, ".gitkeep");
+  if (!exists(sessionsGitkeep)) {
+    Bun.write(sessionsGitkeep, "");
   }
   s.stop("Scaffold files ready");
 

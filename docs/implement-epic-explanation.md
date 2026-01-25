@@ -16,9 +16,8 @@ The `implement-epic` script orchestrates the complete epic-to-implementation pip
 
 ### Required Tools
 
-- **Bun** - JavaScript runtime (for running the script)
 - **Git** - Version control
-- **gh CLI** - GitHub CLI (optional, for PR creation)
+- **gh CLI** - GitHub CLI (for PR creation)
   - Run `gh auth login` to authenticate
 
 ### Required LLM Runtimes (at least one)

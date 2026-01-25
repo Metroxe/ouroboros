@@ -28,10 +28,12 @@ Mission → Epic → Features → Tasks → Task Prompts → Implementation
 
 ```
 ouroboros/
-├── PROMPT.md                 # This file - LLM context guide
 ├── README.md                 # User-facing documentation
 ├── install.sh                # Installer script (curl | bash)
-├── implement-epic-explanation.md  # Detailed docs for the implement-epic script
+│
+├── docs/                     # Detailed documentation
+│   ├── PROMPT.md             # This file - LLM context guide
+│   └── implement-epic-explanation.md  # Detailed docs for the implement-epic script
 │
 ├── oroboros/                 # The installable framework (gets copied to user projects)
 │   ├── .version              # Current version number
@@ -42,6 +44,7 @@ ouroboros/
 │   │   ├── create-tasks.md       # Break features into tasks
 │   │   ├── create-task-prompts.md # Generate implementation prompts
 │   │   ├── create-verification-guide.md # Generate manual testing guide
+│   │   ├── create-session.md        # Start or resume a working session
 │   │   └── iterate-epic.md       # Iterate on existing epic
 │   │
 │   ├── reference/            # Project-specific context (preserved on update)
@@ -65,6 +68,9 @@ ouroboros/
 │   │                   ├── 1-{task}.md     # First task prompt
 │   │                   ├── 2-{task}.md     # Second task prompt
 │   │                   └── ...
+│   │
+│   ├── sessions/             # Working session notes (user-generated)
+│   │   └── {date}-{topic}.md # Session notes file
 │   │
 │   └── scripts/              # Executable scripts
 │       └── implement-epic    # Compiled automation script
@@ -159,6 +165,18 @@ Automated pipeline that:
 - Commits after each step
 - Manages branches and PRs
 
+### 8. create-session.md
+Lightweight working sessions for exploratory work:
+- Supports starting new sessions or resuming existing ones
+- Gathers context from reference files (product-description, tech-stack, gotchas)
+- Creates dated session files: `oroboros/sessions/YYYY-MM-DD-topic-name.md`
+- Continuously updates notes with decisions, code changes, and next steps
+- Enables resumption when context windows fill up
+
+**When to use sessions vs epics:**
+- **Sessions**: Debugging, exploration, refactoring, quick fixes, learning/investigation
+- **Epics**: Planned features, multi-day work, structured implementation
+
 ## Key Concepts
 
 ### Epic Lifecycle
@@ -213,13 +231,14 @@ When working on this codebase, key files to understand:
 
 1. **Prompts** (`oroboros/prompts/*.md`): The core workflow definitions
 2. **implement-epic.ts** (`scripts-src/scripts/implement-epic.ts`): Main automation logic
+   - **Note**: When modifying this file, review `docs/implement-epic-explanation.md` and update it if behavior changes
 3. **Agent adapters** (`scripts-src/lib/agent/*.ts`): LLM runtime integrations
 4. **Epic utilities** (`scripts-src/lib/epic.ts`): Epic/feature parsing
 
 ## Conventions
 
 - Kebab-case for folder names
-- Date prefix for epic folders (YYYY-MM-DD)
+- Date prefix for epic folders and session files (YYYY-MM-DD)
 - Two-digit numbering for features (01, 02, 03)
 - Feature PRDs follow strict template structure
 - Tasks are atomic and independently testable
