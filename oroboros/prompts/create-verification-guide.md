@@ -30,6 +30,8 @@ Read these files to understand what was built:
 
 ## Step 3: Analyze Implemented Code
 
+**Tip:** If the `gh` CLI is available and you're on a branch other than main, use `git diff main...HEAD` to identify what files and code were added or changed by this epic. This helps focus on what's new rather than analyzing the entire codebase.
+
 Search the codebase to identify:
 
 **Entry Points:**
@@ -38,10 +40,10 @@ Search the codebase to identify:
 - UI pages or components
 - Background jobs or workers
 
-**Configuration Requirements:**
-- Environment variables used (search for `process.env`, `os.environ`, etc.)
-- Config files that need to be set up
-- Third-party services or API keys required
+**Configuration Requirements (new ones only):**
+- Environment variables **added by this epic** (not pre-existing ones like `DATABASE_URL` that were already in the project)
+- New config files or config sections added
+- New third-party services or API keys required by this epic
 
 **Database Changes:**
 - Migration files created
@@ -67,13 +69,13 @@ How to manually verify this epic works as expected.
 
 ### Environment Variables
 
-{List any environment variables that need to be set, with example values where appropriate}
+{List any NEW environment variables added by this epic, with example values where appropriate. Do not include pre-existing variables like DATABASE_URL that were already in the project.}
 
 ```bash
 export VARIABLE_NAME=value
 ```
 
-{Or "No environment variables required." if none}
+{Or "No new environment variables required." if none}
 
 ### Services to Run
 
@@ -157,6 +159,7 @@ npm run build
 - Omit sections that don't apply (e.g., skip "Database Changes" if there were none)
 - Focus on the happy path first, then edge cases
 - Use concrete examples with realistic sample data
+- Only include things **added by this epic** - not pre-existing config, env vars, or setup steps
 
 # PHASE 3: Output Summary
 
