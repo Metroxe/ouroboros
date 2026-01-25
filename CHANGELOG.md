@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.9.0](https://github.com/Metroxe/ouroboros/compare/v0.8.1...v0.9.0) (2026-01-25)
+
+
+### Features
+
+* enhance README and documentation for session management and epic implementation ([a89257d](https://github.com/Metroxe/ouroboros/commit/a89257d00d07b1ec86b72bbb3b645acd632cd3cd))
+
 ## [0.8.1](https://github.com/Metroxe/ouroboros/compare/v0.8.0...v0.8.1) (2026-01-25)
 
 
