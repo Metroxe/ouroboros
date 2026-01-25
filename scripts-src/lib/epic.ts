@@ -54,8 +54,8 @@ export interface Feature {
  * Progress state for the epic workflow
  */
 export interface EpicProgress {
-  /** Current phase to resume from (3-6) */
-  phase: 3 | 4 | 5 | 6;
+  /** Current phase to resume from (3-7) */
+  phase: 3 | 4 | 5 | 6 | 7;
   /** For phases 4-5: which feature index to resume from (0-based) */
   resumeFeatureIndex?: number;
   /** For phase 6: which feature and task group to resume from */
@@ -334,9 +334,18 @@ export function detectProgress(epicPath: string): EpicProgress {
     }
   }
 
+  // Check for verification guide
+  const verificationGuidePath = join(epicPath, "verification-guide.md");
+  if (!existsSync(verificationGuidePath)) {
+    return {
+      phase: 7,
+      description: "Starting from Phase 7: Create Verification Guide",
+    };
+  }
+
   // Everything is complete
   return {
-    phase: 6,
+    phase: 7,
     description: "All phases complete",
   };
 }

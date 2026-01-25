@@ -22,6 +22,7 @@ Mission → Epic → Features → Tasks → Task Prompts → Implementation
 4. **Tasks** (`create-tasks.md`): Break each feature into specific implementation steps
 5. **Task Prompts** (`create-task-prompts.md`): Generate executable prompts for each task group
 6. **Implementation** (`implement-epic`): Automated script that runs all prompts and implements the epic
+7. **Verification** (`create-verification-guide.md`): Generate a manual testing guide for the completed epic
 
 ## Repository Structure
 
@@ -40,6 +41,7 @@ ouroboros/
 │   │   ├── create-features.md    # Break epic into features
 │   │   ├── create-tasks.md       # Break features into tasks
 │   │   ├── create-task-prompts.md # Generate implementation prompts
+│   │   ├── create-verification-guide.md # Generate manual testing guide
 │   │   └── iterate-epic.md       # Iterate on existing epic
 │   │
 │   ├── reference/            # Project-specific context (preserved on update)
@@ -52,6 +54,7 @@ ouroboros/
 │   │   └── {date}-{epic-name}/
 │   │       ├── requirements.md     # Epic requirements from create-epic.md
 │   │       ├── features-index.yml  # Feature summary from create-features.md
+│   │       ├── verification-guide.md # Manual testing guide (generated after implementation)
 │   │       └── features/
 │   │           └── {NN}-{feature-name}/
 │   │               ├── prd.md              # Feature PRD
@@ -141,11 +144,18 @@ For each feature:
 - Creates `progress.yml` for tracking
 - Outputs numbered prompt files (1-{name}.md, 2-{name}.md, etc.)
 
-### 6. implement-epic (script)
+### 6. create-verification-guide.md
+Autonomous prompt that:
+- Analyzes implemented code for entry points and config needs
+- Identifies database changes and migrations
+- Generates `verification-guide.md` at the epic root
+
+### 7. implement-epic (script)
 Automated pipeline that:
 - Detects progress and resumes
 - Runs planning prompts (features → tasks → task prompts)
 - Executes each implementation prompt
+- Generates verification guide after implementation
 - Commits after each step
 - Manages branches and PRs
 

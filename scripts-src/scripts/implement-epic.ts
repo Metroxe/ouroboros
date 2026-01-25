@@ -877,6 +877,34 @@ Complete all tasks in this task group. Update progress.yml when done.`;
 }
 
 // ============================================================================
+// Phase 7: Create Verification Guide
+// ============================================================================
+
+async function phase7CreateVerificationGuide(): Promise<void> {
+  p.log.step("Phase 7: Create Verification Guide");
+
+  const prompt = `Run the prompt at oroboros/prompts/create-verification-guide.md with the epic path: ${config.epic.path}
+
+Complete all phases. When verification-guide.md is created at the epic root, you're done.`;
+
+  await runPrompt(
+    config.planningRuntime,
+    config.planningModel,
+    prompt,
+    "Create Verification Guide"
+  );
+
+  // Verify file was created
+  if (!existsSync(join(config.epic.path, "verification-guide.md"))) {
+    p.log.warn("verification-guide.md was not created");
+  } else {
+    p.log.success("Created verification-guide.md");
+  }
+
+  await maybeCommit(`docs: add verification guide for ${config.epic.epicName}`);
+}
+
+// ============================================================================
 // Final Steps
 // ============================================================================
 
@@ -965,6 +993,10 @@ async function main(): Promise<void> {
       const startFeature = progress.resumeTaskGroup?.featureIndex || 0;
       const startTaskGroup = progress.resumeTaskGroup?.taskGroupIndex || 0;
       await phase6Implement(startFeature, startTaskGroup);
+    }
+
+    if (progress.phase <= 7) {
+      await phase7CreateVerificationGuide();
     }
 
     // Finalize
