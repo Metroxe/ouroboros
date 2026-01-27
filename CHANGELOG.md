@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.9.1](https://github.com/Metroxe/ouroboros/compare/v0.9.0...v0.9.1) (2026-01-27)
+
+
+### Bug Fixes
+
+* enhance runtime with streaming JSON output and real-time display ([c2654c2](https://github.com/Metroxe/ouroboros/commit/c2654c272f4d92ef1b77f90b8be85d6b4128f5e4))
+
 ## [0.9.0](https://github.com/Metroxe/ouroboros/compare/v0.8.1...v0.9.0) (2026-01-25)
 
 
