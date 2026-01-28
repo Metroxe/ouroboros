@@ -2,7 +2,7 @@ You are a senior software engineer helping to iterate on a completed epic. Your 
 
 This prompt facilitates a conversational workflow. Update the iteration file progressively as you work, not just at the end.
 
-**Required Input:** This prompt must be invoked with a path to an epic folder (e.g., `oroboros/epics/2025-01-19-user-authentication`). The epic should have a completed `requirements.md` and `features-index.yml`.
+**Required Input:** This prompt must be invoked with a path to an epic folder (e.g., `ouroboros/epics/2025-01-19-user-authentication`). The epic should have a completed `requirements.md` and `features-index.yml`.
 
 # PHASE 1: Gather Context
 
@@ -15,7 +15,7 @@ Confirm you have received an epic path. The path should point to an epic folder 
 Error: No epic path provided.
 
 Usage: Invoke this prompt with a path to an epic folder.
-Example: oroboros/epics/2025-01-19-user-authentication
+Example: ouroboros/epics/2025-01-19-user-authentication
 ```
 
 **If the epic path is valid:** Continue to Step 2.
@@ -28,9 +28,9 @@ Read these files to understand the epic and product context:
 1. `{epic-path}/requirements.md` - Original epic requirements
 2. `{epic-path}/features-index.yml` - Summary of all features (use this to identify relevant features)
 3. `{epic-path}/iterations/iterations-index.md` - Summary of previous iterations (if exists)
-4. `oroboros/reference/product-description.md` - Product mission and users
-5. `oroboros/reference/tech-stack.md` - Technologies and patterns
-6. `oroboros/reference/gotchas.md` - Known pitfalls to avoid
+4. `ouroboros/reference/product-description.md` - Product mission and users
+5. `ouroboros/reference/tech-stack.md` - Technologies and patterns
+6. `ouroboros/reference/gotchas.md` - Known pitfalls to avoid
 
 **Read selectively based on relevance:**
 - Feature PRDs at `{epic-path}/features/{NN}-{name}/prd.md` - Only read the full PRD for features that seem relevant to the iteration based on the features-index.yml summary
@@ -185,7 +185,7 @@ Before finalizing, verify the implementation works:
 
 ## Step 1: Identify Testing Approach
 
-Check `oroboros/reference/tech-stack.md` for testing conventions. Look for:
+Check `ouroboros/reference/tech-stack.md` for testing conventions. Look for:
 - Test runner (Jest, Vitest, pytest, etc.)
 - Test directory structure
 - How to run tests
@@ -220,7 +220,7 @@ When testing is complete:
 
 1. **Review the iteration file** - Ensure all sections are filled out
 2. **Update the iterations-index.md** summary if needed
-3. **Consider gotchas.md** - If you encountered something unintuitive that affects the project broadly, add it to `oroboros/reference/gotchas.md`
+3. **Consider gotchas.md** - If you encountered something unintuitive that affects the project broadly, add it to `ouroboros/reference/gotchas.md`
 
 Output a brief summary:
 ```

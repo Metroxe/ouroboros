@@ -1,5 +1,5 @@
 /**
- * E2E tests for oroboros install/update flow
+ * E2E tests for ouroboros install/update flow
  *
  * Tests the installation script by running it against temporary mock projects.
  */
@@ -11,8 +11,8 @@ import {
   createMockProject,
   cleanupMockProject,
   runInstallScript,
-  getOroborosStructure,
-  OROBOROS_SRC_DIR,
+  getOuroborosStructure,
+  OUROBOROS_SRC_DIR,
 } from "../helpers/setup.js";
 import { readInstalledVersion, writeVersion } from "../../lib/version.js";
 
@@ -27,13 +27,13 @@ describe("Fresh Install", () => {
     cleanupMockProject(mockProject);
   });
 
-  test("creates oroboros directory structure", async () => {
+  test("creates ouroboros directory structure", async () => {
     const result = await runInstallScript(mockProject, { headless: true });
 
     expect(result.success).toBe(true);
 
-    const structure = getOroborosStructure(mockProject);
-    expect(structure.hasOroborosDir).toBe(true);
+    const structure = getOuroborosStructure(mockProject);
+    expect(structure.hasOuroborosDir).toBe(true);
     expect(structure.hasPromptsDir).toBe(true);
     expect(structure.hasReferenceDir).toBe(true);
     expect(structure.hasScriptsDir).toBe(true);
@@ -44,7 +44,7 @@ describe("Fresh Install", () => {
   test("installs prompt files", async () => {
     await runInstallScript(mockProject, { headless: true });
 
-    const structure = getOroborosStructure(mockProject);
+    const structure = getOuroborosStructure(mockProject);
     expect(structure.prompts.length).toBeGreaterThan(0);
     expect(structure.prompts).toContain("create-mission.md");
     expect(structure.prompts).toContain("create-epic.md");
@@ -53,7 +53,7 @@ describe("Fresh Install", () => {
   test("creates reference scaffold files", async () => {
     await runInstallScript(mockProject, { headless: true });
 
-    const structure = getOroborosStructure(mockProject);
+    const structure = getOuroborosStructure(mockProject);
     expect(structure.reference).toContain("epic-index.md");
     expect(structure.reference).toContain("gotchas.md");
   });
@@ -61,8 +61,8 @@ describe("Fresh Install", () => {
   test("writes version file", async () => {
     await runInstallScript(mockProject, { headless: true });
 
-    const oroborosDir = join(mockProject, "oroboros");
-    const version = readInstalledVersion(oroborosDir);
+    const ouroborosDir = join(mockProject, "ouroboros");
+    const version = readInstalledVersion(ouroborosDir);
     expect(version).not.toBeNull();
     // Version can be semver (1.2.3) or "dev" during development
     expect(version).toMatch(/^(\d+\.\d+\.\d+|dev)/);
@@ -71,7 +71,7 @@ describe("Fresh Install", () => {
   test("creates epics directory with .gitkeep", async () => {
     await runInstallScript(mockProject, { headless: true });
 
-    const epicsDir = join(mockProject, "oroboros", "epics");
+    const epicsDir = join(mockProject, "ouroboros", "epics");
     const gitkeep = join(epicsDir, ".gitkeep");
     expect(existsSync(epicsDir)).toBe(true);
     expect(existsSync(gitkeep)).toBe(true);
@@ -93,7 +93,7 @@ describe("Update Install", () => {
 
   test("preserves user-created epics on update", async () => {
     // Create a user epic
-    const epicPath = join(mockProject, "oroboros", "epics", "my-epic.md");
+    const epicPath = join(mockProject, "ouroboros", "epics", "my-epic.md");
     writeFileSync(epicPath, "# My Epic\n\nThis is my custom epic.");
 
     // Run update
@@ -108,7 +108,7 @@ describe("Update Install", () => {
     // Create user's product description
     const descPath = join(
       mockProject,
-      "oroboros",
+      "ouroboros",
       "reference",
       "product-description.md"
     );
@@ -126,7 +126,7 @@ describe("Update Install", () => {
     // Create user's tech stack
     const techPath = join(
       mockProject,
-      "oroboros",
+      "ouroboros",
       "reference",
       "tech-stack.md"
     );
@@ -144,7 +144,7 @@ describe("Update Install", () => {
     // Modify a prompt file (simulating old version)
     const promptPath = join(
       mockProject,
-      "oroboros",
+      "ouroboros",
       "prompts",
       "create-mission.md"
     );
@@ -158,7 +158,7 @@ describe("Update Install", () => {
     const updatedContent = readFileSync(promptPath, "utf-8");
     expect(updatedContent).not.toBe("OLD CONTENT");
     // Content should match source
-    const sourcePrompt = join(OROBOROS_SRC_DIR, "prompts", "create-mission.md");
+    const sourcePrompt = join(OUROBOROS_SRC_DIR, "prompts", "create-mission.md");
     if (existsSync(sourcePrompt)) {
       expect(updatedContent).toBe(readFileSync(sourcePrompt, "utf-8"));
     }
@@ -168,7 +168,7 @@ describe("Update Install", () => {
     // Modify epic-index.md (scaffold file)
     const epicIndexPath = join(
       mockProject,
-      "oroboros",
+      "ouroboros",
       "reference",
       "epic-index.md"
     );
@@ -198,32 +198,32 @@ describe("Version Handling", () => {
   test("handles reinstall of same version", async () => {
     // First install
     await runInstallScript(mockProject, { headless: true });
-    const oroborosDir = join(mockProject, "oroboros");
-    const firstVersion = readInstalledVersion(oroborosDir);
+    const ouroborosDir = join(mockProject, "ouroboros");
+    const firstVersion = readInstalledVersion(ouroborosDir);
 
     // Reinstall
     const result = await runInstallScript(mockProject, { headless: true });
 
     expect(result.success).toBe(true);
-    const secondVersion = readInstalledVersion(oroborosDir);
+    const secondVersion = readInstalledVersion(ouroborosDir);
     expect(secondVersion).toBe(firstVersion);
   });
 
   test("handles update from older version", async () => {
     // Simulate existing older installation
-    const oroborosDir = join(mockProject, "oroboros");
-    mkdirSync(oroborosDir, { recursive: true });
-    mkdirSync(join(oroborosDir, "prompts"), { recursive: true });
-    mkdirSync(join(oroborosDir, "reference"), { recursive: true });
-    mkdirSync(join(oroborosDir, "epics"), { recursive: true });
-    mkdirSync(join(oroborosDir, "scripts"), { recursive: true });
-    writeVersion(oroborosDir, "0.0.1");
+    const ouroborosDir = join(mockProject, "ouroboros");
+    mkdirSync(ouroborosDir, { recursive: true });
+    mkdirSync(join(ouroborosDir, "prompts"), { recursive: true });
+    mkdirSync(join(ouroborosDir, "reference"), { recursive: true });
+    mkdirSync(join(ouroborosDir, "epics"), { recursive: true });
+    mkdirSync(join(ouroborosDir, "scripts"), { recursive: true });
+    writeVersion(ouroborosDir, "0.0.1");
 
     // Update
     const result = await runInstallScript(mockProject, { headless: true });
 
     expect(result.success).toBe(true);
-    const newVersion = readInstalledVersion(oroborosDir);
+    const newVersion = readInstalledVersion(ouroborosDir);
     expect(newVersion).not.toBe("0.0.1");
   });
 });
@@ -241,7 +241,7 @@ describe("Directory Structure Validation", () => {
   });
 
   test("prompts directory contains expected files", () => {
-    const structure = getOroborosStructure(mockProject);
+    const structure = getOuroborosStructure(mockProject);
     const expectedPrompts = [
       "create-mission.md",
       "create-epic.md",
@@ -257,8 +257,8 @@ describe("Directory Structure Validation", () => {
   });
 
   test("prompt files are readable and non-empty", () => {
-    const promptsDir = join(mockProject, "oroboros", "prompts");
-    const structure = getOroborosStructure(mockProject);
+    const promptsDir = join(mockProject, "ouroboros", "prompts");
+    const structure = getOuroborosStructure(mockProject);
 
     for (const prompt of structure.prompts) {
       const content = readFileSync(join(promptsDir, prompt), "utf-8");
@@ -267,7 +267,7 @@ describe("Directory Structure Validation", () => {
   });
 
   test("version file has correct format", () => {
-    const versionPath = join(mockProject, "oroboros", ".version");
+    const versionPath = join(mockProject, "ouroboros", ".version");
     const content = readFileSync(versionPath, "utf-8");
     // Version can be semver (1.2.3) or "dev" during development
     expect(content).toMatch(/^version: (\d+\.\d+\.\d+|dev)/);

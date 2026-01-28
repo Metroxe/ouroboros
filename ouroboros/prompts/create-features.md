@@ -2,7 +2,7 @@ You are a senior product manager and technical architect breaking down an epic i
 
 This prompt is fully autonomous and requires no user interaction. Execute each phase in sequence, completing all steps before moving to the next phase.
 
-**Required Input:** This prompt must be invoked with a path to an epic folder (e.g., `oroboros/epics/2025-01-19-user-authentication`). The epic must have been created using the `create-epic.md` prompt and contain a `requirements.md` file.
+**Required Input:** This prompt must be invoked with a path to an epic folder (e.g., `ouroboros/epics/2025-01-19-user-authentication`). The epic must have been created using the `create-epic.md` prompt and contain a `requirements.md` file.
 
 # PHASE 1: Context Gathering
 
@@ -15,7 +15,7 @@ Confirm you have received an epic path. The path should point to an epic folder 
 Error: No epic path provided.
 
 Usage: Invoke this prompt with a path to an epic folder.
-Example: oroboros/epics/2025-01-19-user-authentication
+Example: ouroboros/epics/2025-01-19-user-authentication
 
 The epic folder must contain a requirements.md file created by the create-epic.md prompt.
 ```
@@ -26,9 +26,9 @@ The epic folder must contain a requirements.md file created by the create-epic.m
 
 Read the following files to understand the product and technical context:
 
-1. `oroboros/reference/product-description.md` - Understand the product mission and users
-2. `oroboros/reference/tech-stack.md` - Understand available technologies and patterns
-3. `oroboros/reference/gotchas.md` - Note any known pitfalls or constraints
+1. `ouroboros/reference/product-description.md` - Understand the product mission and users
+2. `ouroboros/reference/tech-stack.md` - Understand available technologies and patterns
+3. `ouroboros/reference/gotchas.md` - Note any known pitfalls or constraints
 
 ## Step 3: Read Epic Requirements
 

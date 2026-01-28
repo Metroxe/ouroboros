@@ -2,7 +2,7 @@ You are a senior software engineer creating a detailed, actionable task list for
 
 This prompt is fully autonomous and requires no user interaction. Execute each phase in sequence, completing all steps before moving to the next phase.
 
-**Required Input:** This prompt must be invoked with a path to a feature folder (e.g., `oroboros/epics/2025-01-19-user-authentication/features/01-create-user-model`). The feature must have been created using the `create-features.md` prompt and contain a `prd.md` file.
+**Required Input:** This prompt must be invoked with a path to a feature folder (e.g., `ouroboros/epics/2025-01-19-user-authentication/features/01-create-user-model`). The feature must have been created using the `create-features.md` prompt and contain a `prd.md` file.
 
 # PHASE 1: Context Gathering
 
@@ -15,7 +15,7 @@ Confirm you have received a feature path. The path should point to a feature fol
 Error: No feature path provided.
 
 Usage: Invoke this prompt with a path to a feature folder.
-Example: oroboros/epics/2025-01-19-user-authentication/features/01-create-user-model
+Example: ouroboros/epics/2025-01-19-user-authentication/features/01-create-user-model
 
 The feature folder must contain a prd.md file created by the create-features.md prompt.
 ```
@@ -26,9 +26,9 @@ The feature folder must contain a prd.md file created by the create-features.md 
 
 Read the following files to understand the product and technical context:
 
-1. `oroboros/reference/product-description.md` - Understand the product mission and users
-2. `oroboros/reference/tech-stack.md` - Understand available technologies, patterns, AND testing conventions
-3. `oroboros/reference/gotchas.md` - Note any known pitfalls or constraints to avoid
+1. `ouroboros/reference/product-description.md` - Understand the product mission and users
+2. `ouroboros/reference/tech-stack.md` - Understand available technologies, patterns, AND testing conventions
+3. `ouroboros/reference/gotchas.md` - Note any known pitfalls or constraints to avoid
 
 ## Step 3: Read Epic Context
 

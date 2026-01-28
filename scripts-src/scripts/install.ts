@@ -1,8 +1,8 @@
 #!/usr/bin/env bun
 /**
- * Oroboros Install Script
+ * Ouroboros Install Script
  * 
- * Handles both fresh installations and updates of oroboros.
+ * Handles both fresh installations and updates of ouroboros.
  * 
  * Usage:
  *   ./install [target-directory]
@@ -40,18 +40,18 @@ import {
   compareVersions,
 } from "../lib/version.js";
 
-// Determine the source oroboros directory (where this script lives)
-// When compiled, this will be in oroboros/scripts/install
-// The source files are in the parent oroboros/ directory
+// Determine the source ouroboros directory (where this script lives)
+// When compiled, this will be in ouroboros/scripts/install
+// The source files are in the parent ouroboros/ directory
 function getSourceDir(): string {
   // For compiled Bun binaries, process.execPath gives the actual executable path
   // This works both for compiled binaries and when running with `bun run`
   const scriptPath = process.execPath;
   
-  // Go up from scripts/ to oroboros/
-  const oroborosDir = resolve(join(scriptPath, "..", ".."));
+  // Go up from scripts/ to ouroboros/
+  const ouroborosDir = resolve(join(scriptPath, "..", ".."));
   
-  return oroborosDir;
+  return ouroborosDir;
 }
 
 // Get the version from the source .version file
@@ -88,25 +88,25 @@ interface InstallOptions {
 
 async function performInstall(options: InstallOptions): Promise<void> {
   const { targetDir, sourceDir, version, isUpdate, installedVersion } = options;
-  const oroborosTarget = join(targetDir, "oroboros");
+  const ouroborosTarget = join(targetDir, "ouroboros");
   
   const s = spinner();
   
   // Step 1: Create base directory structure
   s.start("Creating directory structure...");
-  ensureDir(oroborosTarget);
-  ensureDir(join(oroborosTarget, "epics"));
-  ensureDir(join(oroborosTarget, "prompts"));
-  ensureDir(join(oroborosTarget, "reference"));
-  ensureDir(join(oroborosTarget, "scripts"));
-  ensureDir(join(oroborosTarget, "sessions"));
+  ensureDir(ouroborosTarget);
+  ensureDir(join(ouroborosTarget, "epics"));
+  ensureDir(join(ouroborosTarget, "prompts"));
+  ensureDir(join(ouroborosTarget, "reference"));
+  ensureDir(join(ouroborosTarget, "scripts"));
+  ensureDir(join(ouroborosTarget, "sessions"));
   s.stop("Directory structure ready");
 
   // Step 2: Copy framework files (always overwrite)
   s.start("Installing framework files...");
   for (const dir of FRAMEWORK_DIRS) {
     const srcDir = join(sourceDir, dir);
-    const destDir = join(oroborosTarget, dir);
+    const destDir = join(ouroborosTarget, dir);
     
     if (exists(srcDir) && isDirectory(srcDir)) {
       const { copied } = copyDirContents(srcDir, destDir, { overwrite: true });
@@ -121,7 +121,7 @@ async function performInstall(options: InstallOptions): Promise<void> {
   s.start("Setting up scaffold files...");
   for (const file of SCAFFOLD_FILES) {
     const srcPath = join(sourceDir, file);
-    const destPath = join(oroborosTarget, file);
+    const destPath = join(ouroborosTarget, file);
     
     if (exists(srcPath) && !exists(destPath)) {
       safeCopy(srcPath, destPath);
@@ -130,14 +130,14 @@ async function performInstall(options: InstallOptions): Promise<void> {
   }
   
   // Create .gitkeep in epics if empty
-  const epicsDir = join(oroborosTarget, "epics");
+  const epicsDir = join(ouroborosTarget, "epics");
   const epicsGitkeep = join(epicsDir, ".gitkeep");
   if (!exists(epicsGitkeep)) {
     Bun.write(epicsGitkeep, "");
   }
   
   // Create .gitkeep in sessions if empty
-  const sessionsDir = join(oroborosTarget, "sessions");
+  const sessionsDir = join(ouroborosTarget, "sessions");
   const sessionsGitkeep = join(sessionsDir, ".gitkeep");
   if (!exists(sessionsGitkeep)) {
     Bun.write(sessionsGitkeep, "");
@@ -145,20 +145,20 @@ async function performInstall(options: InstallOptions): Promise<void> {
   s.stop("Scaffold files ready");
 
   // Step 4: Write version
-  writeVersion(oroborosTarget, version);
+  writeVersion(ouroborosTarget, version);
 
   // Summary
   console.log();
   if (isUpdate) {
-    log.success(`Updated oroboros from ${installedVersion} to ${version}`);
+    log.success(`Updated ouroboros from ${installedVersion} to ${version}`);
   } else {
-    log.success(`Installed oroboros ${version}`);
+    log.success(`Installed ouroboros ${version}`);
   }
   
   console.log();
   log.info("Protected paths (not modified):");
   for (const path of USER_PATHS) {
-    log.message(`  - oroboros/${path}`);
+    log.message(`  - ouroboros/${path}`);
   }
 }
 
@@ -169,11 +169,11 @@ async function main(): Promise<void> {
   // Parse target directory from args, default to current directory
   const targetDir = resolve(process.argv[2] || ".");
   
-  header("oroboros", version);
+  header("ouroboros", version);
   
-  const oroborosTarget = join(targetDir, "oroboros");
-  const installedVersion = exists(oroborosTarget) 
-    ? readInstalledVersion(oroborosTarget) 
+  const ouroborosTarget = join(targetDir, "ouroboros");
+  const installedVersion = exists(ouroborosTarget) 
+    ? readInstalledVersion(ouroborosTarget) 
     : null;
   
   const isUpdate = installedVersion !== null;
@@ -224,7 +224,7 @@ async function main(): Promise<void> {
     console.log();
     log.info("Your epics and reference files will not be modified.");
   } else {
-    log.info(`Installing to: ${oroborosTarget}`);
+    log.info(`Installing to: ${ouroborosTarget}`);
     
     if (!isHeadless()) {
       const proceed = await confirmWithDefault("Continue with installation?", true);
@@ -248,7 +248,7 @@ async function main(): Promise<void> {
   if (isUpdate) {
     footer("Update complete!");
   } else {
-    footer("Done! Run oroboros/prompts/create-mission.md to get started.");
+    footer("Done! Run ouroboros/prompts/create-mission.md to get started.");
   }
 }
 

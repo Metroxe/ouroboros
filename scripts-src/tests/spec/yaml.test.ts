@@ -113,7 +113,7 @@ describe("FeaturesIndex operations", () => {
 
   const sampleFeaturesIndex: FeaturesIndex = {
     epic_name: "Test Epic",
-    epic_path: "oroboros/epics/2025-01-21-test-epic",
+    epic_path: "ouroboros/epics/2025-01-21-test-epic",
     generated: "2025-01-21",
     total_features: 2,
     features: [
@@ -139,7 +139,7 @@ describe("FeaturesIndex operations", () => {
       join(tempDir, "features-index.yml"),
       `
 epic_name: Test Epic
-epic_path: oroboros/epics/2025-01-21-test-epic
+epic_path: ouroboros/epics/2025-01-21-test-epic
 generated: "2025-01-21"
 total_features: 2
 features:

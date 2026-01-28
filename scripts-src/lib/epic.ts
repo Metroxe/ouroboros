@@ -80,17 +80,17 @@ export interface FeatureValidation {
 }
 
 /**
- * Get the oroboros directory path (assumes running from project root)
+ * Get the ouroboros directory path (assumes running from project root)
  */
-export function getOroborosPath(projectRoot: string = "."): string {
-  return join(projectRoot, "oroboros");
+export function getOuroborosPath(projectRoot: string = "."): string {
+  return join(projectRoot, "ouroboros");
 }
 
 /**
  * Get the epics directory path
  */
 export function getEpicsPath(projectRoot: string = "."): string {
-  return join(getOroborosPath(projectRoot), "epics");
+  return join(getOuroborosPath(projectRoot), "epics");
 }
 
 /**
@@ -260,7 +260,7 @@ export function detectProgress(epicPath: string): EpicProgress {
   // Check requirements.md first
   if (!hasRequirements(epicPath)) {
     throw new Error(
-      `Epic does not have requirements.md. Run oroboros/prompts/create-epic.md first.`
+      `Epic does not have requirements.md. Run ouroboros/prompts/create-epic.md first.`
     );
   }
 

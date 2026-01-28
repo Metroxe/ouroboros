@@ -8,7 +8,7 @@ This prompt supports two modes:
 
 ## Step 1: Check for Existing Session
 
-If you were given a path to an existing session file (e.g., `oroboros/sessions/2025-01-24-topic-name.md`):
+If you were given a path to an existing session file (e.g., `ouroboros/sessions/2025-01-24-topic-name.md`):
 - This is a **Resume Session** - skip to PHASE 3
 - Read the session file to recover context
 
@@ -29,9 +29,9 @@ Otherwise prompt the user: "What would you like to work on in this session?"
 
 Read the following files to understand the product and technical context:
 
-1. `oroboros/reference/product-description.md` - Understand the product mission and users
-2. `oroboros/reference/tech-stack.md` - Understand available technologies and patterns
-3. `oroboros/reference/gotchas.md` - Note any known pitfalls or constraints
+1. `ouroboros/reference/product-description.md` - Understand the product mission and users
+2. `ouroboros/reference/tech-stack.md` - Understand available technologies and patterns
+3. `ouroboros/reference/gotchas.md` - Note any known pitfalls or constraints
 
 ## Step 2: Create Session File
 
@@ -49,7 +49,7 @@ TODAY=$(date +%Y-%m-%d)
 SESSION_NAME="[kebab-case-name]"
 
 # Create dated file name
-SESSION_FILE="oroboros/sessions/${TODAY}-${SESSION_NAME}.md"
+SESSION_FILE="ouroboros/sessions/${TODAY}-${SESSION_NAME}.md"
 
 echo "Session file: $SESSION_FILE"
 ```
@@ -117,9 +117,9 @@ Read the existing session file to understand:
 
 Re-read the reference files in case they've been updated:
 
-1. `oroboros/reference/product-description.md`
-2. `oroboros/reference/tech-stack.md`
-3. `oroboros/reference/gotchas.md`
+1. `ouroboros/reference/product-description.md`
+2. `ouroboros/reference/tech-stack.md`
+3. `ouroboros/reference/gotchas.md`
 
 ## Step 3: Acknowledge Context Recovery
 

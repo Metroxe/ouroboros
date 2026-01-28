@@ -1,7 +1,7 @@
 /**
  * CLI utilities
  * 
- * Re-exports @clack/prompts and adds custom helpers for oroboros scripts.
+ * Re-exports @clack/prompts and adds custom helpers for ouroboros scripts.
  */
 
 import * as p from "@clack/prompts";

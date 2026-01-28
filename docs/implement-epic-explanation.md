@@ -8,7 +8,7 @@ The `implement-epic` script orchestrates the complete epic-to-implementation pip
 
 1. **Configuration** - Interactive prompts (with CLI flag overrides) to configure git strategy, PR creation, and LLM runtime selection
 2. **Progress Detection** - Automatically detects where you left off and resumes from that point
-3. **Planning Phases** - Runs the oroboros planning prompts (create-features, create-tasks, create-task-prompts)
+3. **Planning Phases** - Runs the ouroboros planning prompts (create-features, create-tasks, create-task-prompts)
 4. **Implementation Phase** - Executes each task prompt to implement the feature
 5. **Git Integration** - Automatic branching, commits after each step, and PR management
 
@@ -31,7 +31,7 @@ The `implement-epic` script orchestrates the complete epic-to-implementation pip
 ### Basic Usage
 
 ```bash
-./oroboros/scripts/implement-epic
+./ouroboros/scripts/implement-epic
 ```
 
 This will start an interactive session where you'll be prompted for all configuration options.
@@ -41,7 +41,7 @@ This will start an interactive session where you'll be prompted for all configur
 All prompts can be bypassed using CLI flags:
 
 ```bash
-./oroboros/scripts/implement-epic [options]
+./ouroboros/scripts/implement-epic [options]
 ```
 
 | Flag | Description | Values |
@@ -64,13 +64,13 @@ All prompts can be bypassed using CLI flags:
 
 ```bash
 # Fully interactive
-./oroboros/scripts/implement-epic
+./ouroboros/scripts/implement-epic
 
 # Specify epic, use defaults for everything else
-./oroboros/scripts/implement-epic --epic=2025-01-21-user-auth
+./ouroboros/scripts/implement-epic --epic=2025-01-21-user-auth
 
 # Full automation with all flags
-./oroboros/scripts/implement-epic \
+./ouroboros/scripts/implement-epic \
   --epic=2025-01-21-user-auth \
   --branch=yes \
   --branch-from=main \
@@ -83,7 +83,7 @@ All prompts can be bypassed using CLI flags:
   --impl-model=claude-3-5-sonnet-latest
 
 # Use different runtimes for planning vs implementation
-./oroboros/scripts/implement-epic \
+./ouroboros/scripts/implement-epic \
   --planning-runtime=claude \
   --impl-runtime=opencode
 ```
@@ -154,7 +154,7 @@ flowchart TD
 
 The script collects all necessary configuration through interactive prompts (unless CLI flags are provided):
 
-1. **Epic Selection** - Lists all epics in `oroboros/epics/`, sorted by date (newest first)
+1. **Epic Selection** - Lists all epics in `ouroboros/epics/`, sorted by date (newest first)
 2. **Branch Strategy**:
    - Ask if you want to create a new branch
    - If yes, select which branch to branch from
@@ -177,21 +177,21 @@ If branching is enabled:
 
 ### Phase 3: Create Features
 
-1. Run `oroboros/prompts/create-features.md` with the epic path
+1. Run `ouroboros/prompts/create-features.md` with the epic path
 2. Verify `features-index.yml` and feature folders were created
 3. Commit: `docs: plan features for {epic-name}`
 
 ### Phase 4: Create Tasks
 
 For each feature:
-1. Run `oroboros/prompts/create-tasks.md` with the feature path
+1. Run `ouroboros/prompts/create-tasks.md` with the feature path
 2. Verify `tasks.md` was created
 3. Commit: `docs: plan tasks for {feature-name}`
 
 ### Phase 5: Create Task Prompts
 
 For each feature:
-1. Run `oroboros/prompts/create-task-prompts.md` with the feature path
+1. Run `ouroboros/prompts/create-task-prompts.md` with the feature path
 2. Verify `prompts/progress.yml` and prompt files were created
 3. Commit: `docs: create task prompts for {feature-name}`
 
@@ -230,7 +230,7 @@ This means you can safely stop the script at any time (Ctrl+C) and resume later.
 The script creates and manages files in this structure:
 
 ```
-oroboros/
+ouroboros/
 ├── epics/
 │   └── {date}-{epic-name}/
 │       ├── requirements.md           # Created by create-epic.md (prerequisite)
@@ -298,7 +298,7 @@ Note: Token tracking is only available when using Claude Code runtime.
 Make sure you've created an epic first:
 ```bash
 # Run the create-epic prompt with your LLM
-claude "Run oroboros/prompts/create-epic.md"
+claude "Run ouroboros/prompts/create-epic.md"
 ```
 
 ### "Epic does not have requirements.md"

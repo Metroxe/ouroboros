@@ -2,7 +2,7 @@ You are a senior engineer creating a minimal verification guide for a completed 
 
 This prompt is fully autonomous and requires no user interaction. Execute each phase in sequence.
 
-**Required Input:** This prompt must be invoked with a path to an epic folder (e.g., `oroboros/epics/2025-01-19-user-authentication`). The epic should have completed implementation.
+**Required Input:** This prompt must be invoked with a path to an epic folder (e.g., `ouroboros/epics/2025-01-19-user-authentication`). The epic should have completed implementation.
 
 # PHASE 1: Context Gathering
 
@@ -15,7 +15,7 @@ Confirm you have received an epic path. The path should point to an epic folder 
 Error: No epic path provided.
 
 Usage: Invoke this prompt with a path to an epic folder.
-Example: oroboros/epics/2025-01-19-user-authentication
+Example: ouroboros/epics/2025-01-19-user-authentication
 ```
 
 **If the epic path is valid:** Continue to Step 2.

@@ -2,7 +2,7 @@ You are a senior software engineer preparing implementation prompts for a featur
 
 This prompt is fully autonomous and requires no user interaction. Execute each phase in sequence, completing all steps before moving to the next phase.
 
-**Required Input:** This prompt must be invoked with a path to a feature folder (e.g., `oroboros/epics/2025-01-19-user-authentication/features/01-create-user-model`). The feature must have a `tasks.md` file created by the `create-tasks.md` prompt.
+**Required Input:** This prompt must be invoked with a path to a feature folder (e.g., `ouroboros/epics/2025-01-19-user-authentication/features/01-create-user-model`). The feature must have a `tasks.md` file created by the `create-tasks.md` prompt.
 
 # PHASE 1: Context Gathering
 
@@ -15,7 +15,7 @@ Confirm you have received a feature path. The path should point to a feature fol
 Error: No feature path provided.
 
 Usage: Invoke this prompt with a path to a feature folder.
-Example: oroboros/epics/2025-01-19-user-authentication/features/01-create-user-model
+Example: ouroboros/epics/2025-01-19-user-authentication/features/01-create-user-model
 
 The feature folder must contain a tasks.md file created by the create-tasks.md prompt.
 ```
@@ -27,7 +27,7 @@ The feature folder must contain a tasks.md file created by the create-tasks.md p
 From the feature path, derive:
 
 1. **Feature name**: The folder name (e.g., `01-create-user-model`)
-2. **Epic path**: The parent of `features/` directory (e.g., `oroboros/epics/2025-01-19-user-authentication`)
+2. **Epic path**: The parent of `features/` directory (e.g., `ouroboros/epics/2025-01-19-user-authentication`)
 3. **Prompts directory**: `{feature-path}/prompts/`
 
 ## Step 3: Read and Parse tasks.md
@@ -99,8 +99,8 @@ Before implementing, read these files to understand the context:
 2. `{feature-path}/tasks.md` - Full task list showing what came before and after this task group
 3. `{epic-path}/requirements.md` - Epic context and scope
 4. `{epic-path}/features-index.yml` - Where this feature fits in the epic's sequence
-5. `oroboros/reference/tech-stack.md` - Technical patterns and conventions
-6. `oroboros/reference/gotchas.md` - Known pitfalls to avoid
+5. `ouroboros/reference/tech-stack.md` - Technical patterns and conventions
+6. `ouroboros/reference/gotchas.md` - Known pitfalls to avoid
 7. `{feature-path}/development-notes.md` - Notes from previous task groups
 
 ## Task Group to Implement
@@ -165,7 +165,7 @@ Append a section to `{feature-path}/development-notes.md`:
 - Temporary workarounds that will be fixed soon
 - Obvious behavior documented in library docs
 
-If you do add a gotcha, append it to `oroboros/reference/gotchas.md` with a brief, actionable description.
+If you do add a gotcha, append it to `ouroboros/reference/gotchas.md` with a brief, actionable description.
 ```
 
 ---
@@ -177,7 +177,7 @@ If you do add a gotcha, append it to `oroboros/reference/gotchas.md` with a brie
 
 ### Update epic-index.md to In Progress
 
-This is the first task of the first feature, which means implementation is beginning. Update `oroboros/reference/epic-index.md` to move this epic from "Planning" to "In Progress":
+This is the first task of the first feature, which means implementation is beginning. Update `ouroboros/reference/epic-index.md` to move this epic from "Planning" to "In Progress":
 
 1. Find the epic entry under `### Planning`
 2. Remove it from that section
@@ -235,7 +235,7 @@ Check `{epic-path}/features-index.yml` to see if ALL features in this epic now h
 
 **If all features are complete:**
 
-Update `oroboros/reference/epic-index.md` to move this epic from "In Progress" to "Complete":
+Update `ouroboros/reference/epic-index.md` to move this epic from "In Progress" to "Complete":
 
 1. Find the epic entry under `### In Progress`
 2. Remove it from that section

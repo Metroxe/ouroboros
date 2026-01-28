@@ -19,7 +19,7 @@ A prompt-driven development workflow system for AI-assisted software engineering
 
 ### Install
 
-Install or update oroboros in any project:
+Install or update ouroboros in any project:
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/Metroxe/ouroboros/main/install.sh | bash
@@ -37,17 +37,17 @@ After installing, set up your project context:
 
 1. **Define your product mission** - Run the create-mission prompt to establish your product vision:
    ```
-   oroboros/prompts/create-mission.md
+   ouroboros/prompts/create-mission.md
    ```
-   This creates `oroboros/reference/product-description.md`.
+   This creates `ouroboros/reference/product-description.md`.
 
 2. **Define your tech stack** - Run the create-tech-stack prompt:
    ```
-   oroboros/prompts/create-tech-stack.md
+   ouroboros/prompts/create-tech-stack.md
    ```
-   This creates `oroboros/reference/tech-stack.md`.
+   This creates `ouroboros/reference/tech-stack.md`.
 
-3. **Document gotchas** - Add known issues and pitfalls to `oroboros/reference/gotchas.md`. These should be things that are **not inferable from the code** - external constraints, historical decisions, or non-obvious quirks. Examples:
+3. **Document gotchas** - Add known issues and pitfalls to `ouroboros/reference/gotchas.md`. These should be things that are **not inferable from the code** - external constraints, historical decisions, or non-obvious quirks. Examples:
    ```markdown
    ## Infrastructure
    - Production database has a 5-second query timeout enforced at the proxy level
@@ -69,7 +69,7 @@ After installing, set up your project context:
 You can reference any prompt file directly in your LLM conversation. For example:
 
 ```
-Run oroboros/prompts/create-epic.md
+Run ouroboros/prompts/create-epic.md
 ```
 
 The LLM will follow the instructions in that prompt file.
@@ -80,16 +80,16 @@ For planned features and multi-day work, use the epic workflow:
 
 ### Step 1: Create the Epic
 
-Run `oroboros/prompts/create-epic.md` and have a conversation about what you want to build. The prompt will ask clarifying questions and save requirements to `oroboros/epics/{date}-{epic-name}/requirements.md`.
+Run `ouroboros/prompts/create-epic.md` and have a conversation about what you want to build. The prompt will ask clarifying questions and save requirements to `ouroboros/epics/{date}-{epic-name}/requirements.md`.
 
-**Highly recommended:** Commit your changes before Step 2, especially if you have not `.gitignore`d the oroboros folder.
+**Highly recommended:** Commit your changes before Step 2, especially if you have not `.gitignore`d the ouroboros folder.
 
 ### Step 2: Implement the Epic
 
 Run the implementation script:
 
 ```bash
-./oroboros/scripts/implement-epic
+./ouroboros/scripts/implement-epic
 ```
 
 See [docs/implement-epic-explanation.md](docs/implement-epic-explanation.md) for CLI options, configuration details, and troubleshooting.
@@ -99,7 +99,7 @@ See [docs/implement-epic-explanation.md](docs/implement-epic-explanation.md) for
 After implementation completes, review the verification guide:
 
 ```
-oroboros/epics/{epic-name}/verification-guide.md
+ouroboros/epics/{epic-name}/verification-guide.md
 ```
 
 This contains manual testing steps to verify the implementation works correctly.
@@ -109,7 +109,7 @@ This contains manual testing steps to verify the implementation works correctly.
 For bug fixes or additions to the epic, run:
 
 ```
-oroboros/prompts/iterate-epic.md
+ouroboros/prompts/iterate-epic.md
 ```
 
 This guides you through adding features or fixing issues in the existing epic.
@@ -120,9 +120,9 @@ For smaller tasks that don't need the full epic pipeline (debugging, exploration
 
 ### Starting a Session
 
-Run `oroboros/prompts/create-session.md` and describe what you want to work on. The prompt will:
+Run `ouroboros/prompts/create-session.md` and describe what you want to work on. The prompt will:
 - Gather context from your reference files
-- Create a session file at `oroboros/sessions/{date}-{topic}.md`
+- Create a session file at `ouroboros/sessions/{date}-{topic}.md`
 - Track decisions, code changes, and next steps
 
 ### Resuming a Session
@@ -130,7 +130,7 @@ Run `oroboros/prompts/create-session.md` and describe what you want to work on. 
 When you need to continue a session in a new context window, reference the session file:
 
 ```
-Resume oroboros/sessions/2025-01-24-debug-auth-flow.md
+Resume ouroboros/sessions/2025-01-24-debug-auth-flow.md
 ```
 
 The prompt will recover the context and continue where you left off.

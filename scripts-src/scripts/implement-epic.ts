@@ -350,8 +350,8 @@ async function selectEpic(args: CliArgs): Promise<Epic> {
   const epics = listEpics();
 
   if (epics.length === 0) {
-    p.log.error("No epics found in oroboros/epics/");
-    p.log.info("Run oroboros/prompts/create-epic.md to create an epic first.");
+    p.log.error("No epics found in ouroboros/epics/");
+    p.log.info("Run ouroboros/prompts/create-epic.md to create an epic first.");
     process.exit(1);
   }
 
@@ -685,7 +685,7 @@ async function phase2Setup(): Promise<void> {
 async function phase3CreateFeatures(): Promise<void> {
   p.log.step("Phase 3: Create Features");
 
-  const prompt = `Run the prompt at oroboros/prompts/create-features.md with the epic path: ${config.epic.path}
+  const prompt = `Run the prompt at ouroboros/prompts/create-features.md with the epic path: ${config.epic.path}
 
 Complete all phases without stopping for confirmation. When features-index.yml and feature PRDs are created, you're done.`;
 
@@ -730,7 +730,7 @@ async function phase4CreateTasks(startIndex: number = 0): Promise<void> {
 
     p.log.info(`Creating tasks for feature: ${feature.folderName}`);
 
-    const prompt = `Run the prompt at oroboros/prompts/create-tasks.md with the feature path: ${feature.path}
+    const prompt = `Run the prompt at ouroboros/prompts/create-tasks.md with the feature path: ${feature.path}
 
 Complete all phases without stopping for confirmation. When tasks.md is created, you're done.`;
 
@@ -772,7 +772,7 @@ async function phase5CreateTaskPrompts(startIndex: number = 0): Promise<void> {
 
     p.log.info(`Creating task prompts for feature: ${feature.folderName}`);
 
-    const prompt = `Run the prompt at oroboros/prompts/create-task-prompts.md with the feature path: ${feature.path}
+    const prompt = `Run the prompt at ouroboros/prompts/create-task-prompts.md with the feature path: ${feature.path}
 
 Complete all phases without stopping for confirmation. When progress.yml and prompt files are created, you're done.`;
 
@@ -883,7 +883,7 @@ Complete all tasks in this task group. Update progress.yml when done.`;
 async function phase7CreateVerificationGuide(): Promise<void> {
   p.log.step("Phase 7: Create Verification Guide");
 
-  const prompt = `Run the prompt at oroboros/prompts/create-verification-guide.md with the epic path: ${config.epic.path}
+  const prompt = `Run the prompt at ouroboros/prompts/create-verification-guide.md with the epic path: ${config.epic.path}
 
 Complete all phases. When verification-guide.md is created at the epic root, you're done.`;
 

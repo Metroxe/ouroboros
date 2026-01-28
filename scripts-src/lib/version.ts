@@ -70,11 +70,11 @@ export function compareVersions(a: string, b: string): -1 | 0 | 1 {
 }
 
 /**
- * Read the installed version from an oroboros directory
+ * Read the installed version from an ouroboros directory
  * Supports both "0.1.0" and "version: 0.1.0" formats
  */
-export function readInstalledVersion(oroborosDir: string): string | null {
-  const versionFile = join(oroborosDir, ".version");
+export function readInstalledVersion(ouroborosDir: string): string | null {
+  const versionFile = join(ouroborosDir, ".version");
   
   if (!existsSync(versionFile)) {
     return null;
@@ -91,11 +91,11 @@ export function readInstalledVersion(oroborosDir: string): string | null {
 }
 
 /**
- * Write version to an oroboros directory
+ * Write version to an ouroboros directory
  * Uses "version: X.X.X" format for release-please compatibility
  */
-export function writeVersion(oroborosDir: string, version: string): void {
-  const versionFile = join(oroborosDir, ".version");
+export function writeVersion(ouroborosDir: string, version: string): void {
+  const versionFile = join(ouroborosDir, ".version");
   writeFileSync(versionFile, `version: ${version.trim()}\n`, "utf-8");
 }
 

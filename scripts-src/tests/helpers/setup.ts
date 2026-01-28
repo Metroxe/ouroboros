@@ -22,9 +22,9 @@ import { readInstalledVersion, writeVersion } from "../../lib/version.js";
 export const SCRIPTS_SRC_DIR = resolve(import.meta.dir, "../..");
 
 /**
- * Path to the oroboros source directory
+ * Path to the ouroboros source directory
  */
-export const OROBOROS_SRC_DIR = resolve(SCRIPTS_SRC_DIR, "../oroboros");
+export const OUROBOROS_SRC_DIR = resolve(SCRIPTS_SRC_DIR, "../ouroboros");
 
 /**
  * Path to the fixtures directory
@@ -36,7 +36,7 @@ export const FIXTURES_DIR = resolve(import.meta.dir, "../fixtures");
  * @returns Path to the created mock project
  */
 export function createMockProject(): string {
-  const tempDir = mkdtempSync(join(tmpdir(), "oroboros-test-"));
+  const tempDir = mkdtempSync(join(tmpdir(), "ouroboros-test-"));
   const mockProjectSrc = join(FIXTURES_DIR, "mock-project");
 
   if (existsSync(mockProjectSrc)) {
@@ -50,7 +50,7 @@ export function createMockProject(): string {
  * Clean up a mock project directory
  */
 export function cleanupMockProject(projectPath: string): void {
-  if (existsSync(projectPath) && projectPath.includes("oroboros-test-")) {
+  if (existsSync(projectPath) && projectPath.includes("ouroboros-test-")) {
     rmSync(projectPath, { recursive: true, force: true });
   }
 }
@@ -67,28 +67,28 @@ const SCAFFOLD_FILES = [
 
 /**
  * Run the install logic directly (not via subprocess)
- * This mimics what the compiled install script does, but uses the source oroboros directory.
+ * This mimics what the compiled install script does, but uses the source ouroboros directory.
  */
 export async function runInstallScript(
   targetDir: string,
   options: { headless?: boolean } = {}
 ): Promise<{ success: boolean; output: string }> {
   try {
-    const sourceDir = OROBOROS_SRC_DIR;
+    const sourceDir = OUROBOROS_SRC_DIR;
     const version = readInstalledVersion(sourceDir) || "0.0.0";
-    const oroborosTarget = join(targetDir, "oroboros");
+    const ouroborosTarget = join(targetDir, "ouroboros");
 
     // Step 1: Create base directory structure
-    ensureDir(oroborosTarget);
-    ensureDir(join(oroborosTarget, "epics"));
-    ensureDir(join(oroborosTarget, "prompts"));
-    ensureDir(join(oroborosTarget, "reference"));
-    ensureDir(join(oroborosTarget, "scripts"));
+    ensureDir(ouroborosTarget);
+    ensureDir(join(ouroborosTarget, "epics"));
+    ensureDir(join(ouroborosTarget, "prompts"));
+    ensureDir(join(ouroborosTarget, "reference"));
+    ensureDir(join(ouroborosTarget, "scripts"));
 
     // Step 2: Copy framework files (always overwrite)
     for (const dir of FRAMEWORK_DIRS) {
       const srcDir = join(sourceDir, dir);
-      const destDir = join(oroborosTarget, dir);
+      const destDir = join(ouroborosTarget, dir);
 
       if (exists(srcDir) && isDirectory(srcDir)) {
         copyDirContents(srcDir, destDir, { overwrite: true });
@@ -98,7 +98,7 @@ export async function runInstallScript(
     // Step 3: Copy scaffold files (only if missing)
     for (const file of SCAFFOLD_FILES) {
       const srcPath = join(sourceDir, file);
-      const destPath = join(oroborosTarget, file);
+      const destPath = join(ouroborosTarget, file);
 
       if (exists(srcPath) && !exists(destPath)) {
         // Ensure parent directory exists
@@ -108,18 +108,18 @@ export async function runInstallScript(
     }
 
     // Create .gitkeep in epics if empty
-    const epicsDir = join(oroborosTarget, "epics");
+    const epicsDir = join(ouroborosTarget, "epics");
     const gitkeep = join(epicsDir, ".gitkeep");
     if (!exists(gitkeep)) {
       writeFileSync(gitkeep, "");
     }
 
     // Step 4: Write version
-    writeVersion(oroborosTarget, version);
+    writeVersion(ouroborosTarget, version);
 
     return {
       success: true,
-      output: `Installed oroboros ${version} to ${oroborosTarget}`,
+      output: `Installed ouroboros ${version} to ${ouroborosTarget}`,
     };
   } catch (error) {
     return {
@@ -130,10 +130,10 @@ export async function runInstallScript(
 }
 
 /**
- * Expected structure of an oroboros installation
+ * Expected structure of an ouroboros installation
  */
-export interface OroborosStructure {
-  hasOroborosDir: boolean;
+export interface OuroborosStructure {
+  hasOuroborosDir: boolean;
   hasPromptsDir: boolean;
   hasReferenceDir: boolean;
   hasScriptsDir: boolean;
@@ -144,18 +144,18 @@ export interface OroborosStructure {
 }
 
 /**
- * Assert that an oroboros installation has the expected structure
+ * Assert that an ouroboros installation has the expected structure
  */
-export function getOroborosStructure(projectPath: string): OroborosStructure {
-  const oroborosDir = join(projectPath, "oroboros");
-  const promptsDir = join(oroborosDir, "prompts");
-  const referenceDir = join(oroborosDir, "reference");
-  const scriptsDir = join(oroborosDir, "scripts");
-  const epicsDir = join(oroborosDir, "epics");
-  const versionFile = join(oroborosDir, ".version");
+export function getOuroborosStructure(projectPath: string): OuroborosStructure {
+  const ouroborosDir = join(projectPath, "ouroboros");
+  const promptsDir = join(ouroborosDir, "prompts");
+  const referenceDir = join(ouroborosDir, "reference");
+  const scriptsDir = join(ouroborosDir, "scripts");
+  const epicsDir = join(ouroborosDir, "epics");
+  const versionFile = join(ouroborosDir, ".version");
 
   return {
-    hasOroborosDir: existsSync(oroborosDir),
+    hasOuroborosDir: existsSync(ouroborosDir),
     hasPromptsDir: existsSync(promptsDir),
     hasReferenceDir: existsSync(referenceDir),
     hasScriptsDir: existsSync(scriptsDir),

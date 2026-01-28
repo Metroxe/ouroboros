@@ -1,7 +1,7 @@
 /**
  * Oroboros Scripts Library
  * 
- * Shared utilities for oroboros CLI scripts.
+ * Shared utilities for ouroboros CLI scripts.
  */
 
 export * from "./cli.js";

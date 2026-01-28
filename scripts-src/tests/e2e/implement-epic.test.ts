@@ -1,7 +1,7 @@
 /**
  * E2E tests for implement-epic script
  *
- * These tests set up a complete oroboros installation with a sample epic
+ * These tests set up a complete ouroboros installation with a sample epic
  * and test the progress detection, file validation, and optionally
  * the full implementation flow (requires LLM runtime, skipped in CI).
  */
@@ -47,17 +47,17 @@ const SAMPLE_EPIC_DIR = join(FIXTURES_DIR, "sample-epic");
 const skipRuntimeTests = shouldSkipRuntimeTests();
 
 /**
- * Set up a mock project with oroboros installed and sample epic
+ * Set up a mock project with ouroboros installed and sample epic
  */
 async function setupProjectWithEpic(): Promise<string> {
   const mockProject = createMockProject();
 
-  // Install oroboros
+  // Install ouroboros
   await runInstallScript(mockProject, { headless: true });
 
   // Copy sample epic to the project
   const epicName = "2025-01-21-bash-utility-scripts";
-  const epicDest = join(mockProject, "oroboros", "epics", epicName);
+  const epicDest = join(mockProject, "ouroboros", "epics", epicName);
 
   cpSync(SAMPLE_EPIC_DIR, epicDest, { recursive: true });
 
@@ -112,7 +112,7 @@ describe("Feature Validation", () => {
 
   beforeEach(async () => {
     mockProject = await setupProjectWithEpic();
-    epicPath = join(mockProject, "oroboros", "epics", "2025-01-21-bash-utility-scripts");
+    epicPath = join(mockProject, "ouroboros", "epics", "2025-01-21-bash-utility-scripts");
   });
 
   afterEach(() => {
@@ -161,7 +161,7 @@ describe("Progress Detection", () => {
 
   beforeEach(async () => {
     mockProject = await setupProjectWithEpic();
-    epicPath = join(mockProject, "oroboros", "epics", "2025-01-21-bash-utility-scripts");
+    epicPath = join(mockProject, "ouroboros", "epics", "2025-01-21-bash-utility-scripts");
   });
 
   afterEach(() => {
@@ -248,7 +248,7 @@ describe("Progress.yml Operations", () => {
 
   beforeEach(async () => {
     mockProject = await setupProjectWithEpic();
-    epicPath = join(mockProject, "oroboros", "epics", "2025-01-21-bash-utility-scripts");
+    epicPath = join(mockProject, "ouroboros", "epics", "2025-01-21-bash-utility-scripts");
   });
 
   afterEach(() => {
@@ -290,7 +290,7 @@ describe("Git Integration", () => {
 
   beforeEach(async () => {
     mockProject = await setupProjectWithEpic();
-    epicPath = join(mockProject, "oroboros", "epics", "2025-01-21-bash-utility-scripts");
+    epicPath = join(mockProject, "ouroboros", "epics", "2025-01-21-bash-utility-scripts");
     initGitRepo(mockProject);
   });
 
@@ -332,7 +332,7 @@ describe("Full Implementation Flow (Requires LLM)", () => {
       mockProject = await setupProjectWithEpic();
       epicPath = join(
         mockProject,
-        "oroboros",
+        "ouroboros",
         "epics",
         "2025-01-21-bash-utility-scripts"
       );

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # =============================================================================
-# Oroboros Build Script
+# Ouroboros Build Script
 # Compiles TypeScript scripts to standalone Bun executables
 # =============================================================================
 #
@@ -13,7 +13,7 @@
 #   -h, --help        Show this help message
 #
 # OUTPUT:
-#   Compiled binaries are placed in ../oroboros/scripts/
+#   Compiled binaries are placed in ../ouroboros/scripts/
 #
 # =============================================================================
 
@@ -21,7 +21,7 @@ set -e
 
 # Script directory
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-OUTPUT_DIR="$SCRIPT_DIR/../oroboros/scripts"
+OUTPUT_DIR="$SCRIPT_DIR/../ouroboros/scripts"
 
 # Colors
 RED='\033[0;31m'
@@ -56,7 +56,7 @@ if ! command -v bun &> /dev/null; then
     exit 1
 fi
 
-echo "Building oroboros scripts..."
+echo "Building ouroboros scripts..."
 echo ""
 
 # Ensure output directory exists

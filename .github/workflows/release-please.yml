@@ -50,8 +50,8 @@ jobs:
 
       - name: Update version file
         run: |
-          echo "version: ${{ steps.version.outputs.version }}" > oroboros/.version
-          cat oroboros/.version
+          echo "version: ${{ steps.version.outputs.version }}" > ouroboros/.version
+          cat ouroboros/.version
 
       - name: Install dependencies
         working-directory: scripts-src
@@ -63,12 +63,12 @@ jobs:
 
       - name: Create tarball
         run: |
-          tar -czvf oroboros-darwin-arm64.tar.gz oroboros/
+          tar -czvf ouroboros-darwin-arm64.tar.gz ouroboros/
 
       - name: Upload to release
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ needs.release-please.outputs.tag_name }}
           files: |
-            oroboros-darwin-arm64.tar.gz
+            ouroboros-darwin-arm64.tar.gz
             install.sh

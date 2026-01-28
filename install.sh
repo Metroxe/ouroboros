@@ -20,11 +20,11 @@ BLUE='\033[0;34m'
 NC='\033[0m'
 
 REPO="Metroxe/ouroboros"
-INSTALL_DIR="./oroboros"
+INSTALL_DIR="./ouroboros"
 
 echo ""
 echo -e "${BLUE}╭─────────────────────────────────────╮${NC}"
-echo -e "${BLUE}│${NC}         ${GREEN}oroboros installer${NC}         ${BLUE}│${NC}"
+echo -e "${BLUE}│${NC}         ${GREEN}ouroboros installer${NC}         ${BLUE}│${NC}"
 echo -e "${BLUE}╰─────────────────────────────────────╯${NC}"
 echo ""
 
@@ -75,29 +75,29 @@ if [ "$OS" != "Darwin" ] || [ "$ARCH" != "arm64" ]; then
 fi
 
 # Download URL
-DOWNLOAD_URL="https://github.com/${REPO}/releases/download/${VERSION}/oroboros-darwin-arm64.tar.gz"
+DOWNLOAD_URL="https://github.com/${REPO}/releases/download/${VERSION}/ouroboros-darwin-arm64.tar.gz"
 
 echo ""
-echo "Downloading oroboros ${VERSION}..."
+echo "Downloading ouroboros ${VERSION}..."
 
 # Create temp directory
 TEMP_DIR=$(mktemp -d)
 trap "rm -rf $TEMP_DIR" EXIT
 
 # Download and extract
-if ! curl -fsSL "$DOWNLOAD_URL" -o "$TEMP_DIR/oroboros.tar.gz"; then
+if ! curl -fsSL "$DOWNLOAD_URL" -o "$TEMP_DIR/ouroboros.tar.gz"; then
     echo -e "${RED}Error: Failed to download release${NC}"
     echo "URL: $DOWNLOAD_URL"
     exit 1
 fi
 
 echo "Extracting..."
-tar -xzf "$TEMP_DIR/oroboros.tar.gz" -C "$TEMP_DIR"
+tar -xzf "$TEMP_DIR/ouroboros.tar.gz" -C "$TEMP_DIR"
 
 # Run the install script from the extracted package
 echo ""
-if [ -x "$TEMP_DIR/oroboros/scripts/install" ]; then
-    "$TEMP_DIR/oroboros/scripts/install" .
+if [ -x "$TEMP_DIR/ouroboros/scripts/install" ]; then
+    "$TEMP_DIR/ouroboros/scripts/install" .
 else
     echo -e "${YELLOW}Warning: Compiled installer not found, using fallback${NC}"
     
@@ -105,13 +105,13 @@ else
     mkdir -p "$INSTALL_DIR/prompts" "$INSTALL_DIR/reference" "$INSTALL_DIR/scripts" "$INSTALL_DIR/epics"
     
     # Copy framework files (always overwrite)
-    cp -r "$TEMP_DIR/oroboros/prompts/"* "$INSTALL_DIR/prompts/" 2>/dev/null || true
-    cp -r "$TEMP_DIR/oroboros/scripts/"* "$INSTALL_DIR/scripts/" 2>/dev/null || true
-    cp "$TEMP_DIR/oroboros/.version" "$INSTALL_DIR/.version" 2>/dev/null || true
+    cp -r "$TEMP_DIR/ouroboros/prompts/"* "$INSTALL_DIR/prompts/" 2>/dev/null || true
+    cp -r "$TEMP_DIR/ouroboros/scripts/"* "$INSTALL_DIR/scripts/" 2>/dev/null || true
+    cp "$TEMP_DIR/ouroboros/.version" "$INSTALL_DIR/.version" 2>/dev/null || true
     
     # Copy scaffold files (only if missing)
-    [ ! -f "$INSTALL_DIR/reference/epic-index.md" ] && cp "$TEMP_DIR/oroboros/reference/epic-index.md" "$INSTALL_DIR/reference/" 2>/dev/null || true
-    [ ! -f "$INSTALL_DIR/reference/gotchas.md" ] && cp "$TEMP_DIR/oroboros/reference/gotchas.md" "$INSTALL_DIR/reference/" 2>/dev/null || true
+    [ ! -f "$INSTALL_DIR/reference/epic-index.md" ] && cp "$TEMP_DIR/ouroboros/reference/epic-index.md" "$INSTALL_DIR/reference/" 2>/dev/null || true
+    [ ! -f "$INSTALL_DIR/reference/gotchas.md" ] && cp "$TEMP_DIR/ouroboros/reference/gotchas.md" "$INSTALL_DIR/reference/" 2>/dev/null || true
     
     # Create .gitkeep in epics
     touch "$INSTALL_DIR/epics/.gitkeep"
@@ -119,13 +119,13 @@ else
     NEW_VERSION=$(parse_version "$(cat "$INSTALL_DIR/.version")")
     echo ""
     if [ "$MODE" = "update" ]; then
-        echo -e "${GREEN}✓ Updated oroboros to v${NEW_VERSION}${NC}"
+        echo -e "${GREEN}✓ Updated ouroboros to v${NEW_VERSION}${NC}"
         echo ""
         echo -e "${GREEN}Update complete!${NC}"
     else
-        echo -e "${GREEN}✓ Installed oroboros v${NEW_VERSION}${NC}"
+        echo -e "${GREEN}✓ Installed ouroboros v${NEW_VERSION}${NC}"
         echo ""
-        echo -e "${GREEN}Done!${NC} Run ${BLUE}oroboros/prompts/create-mission.md${NC} to get started."
+        echo -e "${GREEN}Done!${NC} Run ${BLUE}ouroboros/prompts/create-mission.md${NC} to get started."
     fi
     echo ""
 fi

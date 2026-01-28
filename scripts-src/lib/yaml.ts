@@ -1,7 +1,7 @@
 /**
  * YAML utilities
  *
- * Provides parsing and serialization for YAML files used in oroboros,
+ * Provides parsing and serialization for YAML files used in ouroboros,
  * specifically features-index.yml and progress.yml.
  */
 

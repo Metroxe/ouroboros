@@ -8,5 +8,5 @@ scripts-src/dist
 scripts-src/bun.lock
 
 # Compiled binaries (built from scripts-src, attached to releases)
-oroboros/scripts/*
-!oroboros/scripts/.gitkeep
+ouroboros/scripts/*
+!ouroboros/scripts/.gitkeep

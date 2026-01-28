@@ -25,19 +25,19 @@ import {
 import { writeFeaturesIndex, writeProgressYml } from "../../lib/yaml.js";
 
 /**
- * Create a mock oroboros structure in a temp directory
+ * Create a mock ouroboros structure in a temp directory
  */
-function createMockOroboros(basePath: string): string {
-  const oroborosPath = join(basePath, "oroboros");
-  mkdirSync(join(oroborosPath, "epics"), { recursive: true });
-  return oroborosPath;
+function createMockOuroboros(basePath: string): string {
+  const ouroborosPath = join(basePath, "ouroboros");
+  mkdirSync(join(ouroborosPath, "epics"), { recursive: true });
+  return ouroborosPath;
 }
 
 /**
  * Create a mock epic
  */
 function createMockEpic(
-  oroborosPath: string,
+  ouroborosPath: string,
   name: string,
   options: {
     hasRequirements?: boolean;
@@ -50,7 +50,7 @@ function createMockEpic(
     }>;
   } = {}
 ): string {
-  const epicPath = join(oroborosPath, "epics", name);
+  const epicPath = join(ouroborosPath, "epics", name);
   mkdirSync(epicPath, { recursive: true });
 
   if (options.hasRequirements !== false) {
@@ -126,16 +126,16 @@ describe("listEpics", () => {
   });
 
   test("returns empty array when no epics", () => {
-    createMockOroboros(tempDir);
+    createMockOuroboros(tempDir);
     const epics = listEpics(tempDir);
     expect(epics).toEqual([]);
   });
 
   test("lists epics sorted by date (newest first)", () => {
-    const oroborosPath = createMockOroboros(tempDir);
-    createMockEpic(oroborosPath, "2025-01-15-older-epic");
-    createMockEpic(oroborosPath, "2025-01-20-newer-epic");
-    createMockEpic(oroborosPath, "2025-01-10-oldest-epic");
+    const ouroborosPath = createMockOuroboros(tempDir);
+    createMockEpic(ouroborosPath, "2025-01-15-older-epic");
+    createMockEpic(ouroborosPath, "2025-01-20-newer-epic");
+    createMockEpic(ouroborosPath, "2025-01-10-oldest-epic");
 
     const epics = listEpics(tempDir);
     expect(epics.length).toBe(3);
@@ -145,8 +145,8 @@ describe("listEpics", () => {
   });
 
   test("parses epic name correctly", () => {
-    const oroborosPath = createMockOroboros(tempDir);
-    createMockEpic(oroborosPath, "2025-01-21-user-authentication");
+    const ouroborosPath = createMockOuroboros(tempDir);
+    createMockEpic(ouroborosPath, "2025-01-21-user-authentication");
 
     const epics = listEpics(tempDir);
     expect(epics[0].date).toBe("2025-01-21");
@@ -154,10 +154,10 @@ describe("listEpics", () => {
   });
 
   test("ignores invalid folder names", () => {
-    const oroborosPath = createMockOroboros(tempDir);
-    createMockEpic(oroborosPath, "2025-01-21-valid-epic");
-    mkdirSync(join(oroborosPath, "epics", "invalid-no-date"), { recursive: true });
-    mkdirSync(join(oroborosPath, "epics", ".hidden"), { recursive: true });
+    const ouroborosPath = createMockOuroboros(tempDir);
+    createMockEpic(ouroborosPath, "2025-01-21-valid-epic");
+    mkdirSync(join(ouroborosPath, "epics", "invalid-no-date"), { recursive: true });
+    mkdirSync(join(ouroborosPath, "epics", ".hidden"), { recursive: true });
 
     const epics = listEpics(tempDir);
     expect(epics.length).toBe(1);
@@ -177,8 +177,8 @@ describe("getEpic", () => {
   });
 
   test("returns epic by name", () => {
-    const oroborosPath = createMockOroboros(tempDir);
-    createMockEpic(oroborosPath, "2025-01-21-my-epic");
+    const ouroborosPath = createMockOuroboros(tempDir);
+    createMockEpic(ouroborosPath, "2025-01-21-my-epic");
 
     const epic = getEpic("2025-01-21-my-epic", tempDir);
     expect(epic).not.toBeNull();
@@ -186,7 +186,7 @@ describe("getEpic", () => {
   });
 
   test("returns null for non-existent epic", () => {
-    createMockOroboros(tempDir);
+    createMockOuroboros(tempDir);
     const epic = getEpic("nonexistent", tempDir);
     expect(epic).toBeNull();
   });
@@ -204,8 +204,8 @@ describe("hasRequirements", () => {
   });
 
   test("returns true when requirements.md exists", () => {
-    const oroborosPath = createMockOroboros(tempDir);
-    const epicPath = createMockEpic(oroborosPath, "2025-01-21-test", {
+    const ouroborosPath = createMockOuroboros(tempDir);
+    const epicPath = createMockEpic(ouroborosPath, "2025-01-21-test", {
       hasRequirements: true,
     });
 
@@ -213,8 +213,8 @@ describe("hasRequirements", () => {
   });
 
   test("returns false when requirements.md missing", () => {
-    const oroborosPath = createMockOroboros(tempDir);
-    const epicPath = createMockEpic(oroborosPath, "2025-01-21-test", {
+    const ouroborosPath = createMockOuroboros(tempDir);
+    const epicPath = createMockEpic(ouroborosPath, "2025-01-21-test", {
       hasRequirements: false,
     });
 
@@ -234,8 +234,8 @@ describe("discoverFeaturesFromDirectory", () => {
   });
 
   test("discovers features from directory", () => {
-    const oroborosPath = createMockOroboros(tempDir);
-    const epicPath = createMockEpic(oroborosPath, "2025-01-21-test", {
+    const ouroborosPath = createMockOuroboros(tempDir);
+    const epicPath = createMockEpic(ouroborosPath, "2025-01-21-test", {
       features: [
         { name: "feature-one", hasTasks: true, hasPrompts: true },
         { name: "feature-two", hasTasks: false },
@@ -256,8 +256,8 @@ describe("discoverFeaturesFromDirectory", () => {
   });
 
   test("returns features sorted by number", () => {
-    const oroborosPath = createMockOroboros(tempDir);
-    const epicPath = createMockEpic(oroborosPath, "2025-01-21-test", {
+    const ouroborosPath = createMockOuroboros(tempDir);
+    const epicPath = createMockEpic(ouroborosPath, "2025-01-21-test", {
       features: [
         { name: "third" },
         { name: "first" },
@@ -284,8 +284,8 @@ describe("validateFeatures", () => {
   });
 
   test("valid when index matches directory", () => {
-    const oroborosPath = createMockOroboros(tempDir);
-    const epicPath = createMockEpic(oroborosPath, "2025-01-21-test", {
+    const ouroborosPath = createMockOuroboros(tempDir);
+    const epicPath = createMockEpic(ouroborosPath, "2025-01-21-test", {
       features: [{ name: "feature-one" }, { name: "feature-two" }],
     });
 
@@ -295,8 +295,8 @@ describe("validateFeatures", () => {
   });
 
   test("invalid when features-index.yml missing", () => {
-    const oroborosPath = createMockOroboros(tempDir);
-    const epicPath = join(oroborosPath, "epics", "2025-01-21-test");
+    const ouroborosPath = createMockOuroboros(tempDir);
+    const epicPath = join(ouroborosPath, "epics", "2025-01-21-test");
     mkdirSync(epicPath, { recursive: true });
 
     const validation = validateFeatures(epicPath);
@@ -317,8 +317,8 @@ describe("detectProgress", () => {
   });
 
   test("throws when requirements.md missing", () => {
-    const oroborosPath = createMockOroboros(tempDir);
-    const epicPath = createMockEpic(oroborosPath, "2025-01-21-test", {
+    const ouroborosPath = createMockOuroboros(tempDir);
+    const epicPath = createMockEpic(ouroborosPath, "2025-01-21-test", {
       hasRequirements: false,
     });
 
@@ -326,16 +326,16 @@ describe("detectProgress", () => {
   });
 
   test("returns phase 3 when no features", () => {
-    const oroborosPath = createMockOroboros(tempDir);
-    const epicPath = createMockEpic(oroborosPath, "2025-01-21-test");
+    const ouroborosPath = createMockOuroboros(tempDir);
+    const epicPath = createMockEpic(ouroborosPath, "2025-01-21-test");
 
     const progress = detectProgress(epicPath);
     expect(progress.phase).toBe(3);
   });
 
   test("returns phase 4 when features exist but missing tasks", () => {
-    const oroborosPath = createMockOroboros(tempDir);
-    const epicPath = createMockEpic(oroborosPath, "2025-01-21-test", {
+    const ouroborosPath = createMockOuroboros(tempDir);
+    const epicPath = createMockEpic(ouroborosPath, "2025-01-21-test", {
       features: [
         { name: "feature-one", hasTasks: true },
         { name: "feature-two", hasTasks: false },
@@ -348,8 +348,8 @@ describe("detectProgress", () => {
   });
 
   test("returns phase 5 when tasks exist but missing prompts", () => {
-    const oroborosPath = createMockOroboros(tempDir);
-    const epicPath = createMockEpic(oroborosPath, "2025-01-21-test", {
+    const ouroborosPath = createMockOuroboros(tempDir);
+    const epicPath = createMockEpic(ouroborosPath, "2025-01-21-test", {
       features: [
         { name: "feature-one", hasTasks: true, hasPrompts: true },
         { name: "feature-two", hasTasks: true, hasPrompts: false },
@@ -362,8 +362,8 @@ describe("detectProgress", () => {
   });
 
   test("returns phase 6 with resume info when partially implemented", () => {
-    const oroborosPath = createMockOroboros(tempDir);
-    const epicPath = createMockEpic(oroborosPath, "2025-01-21-test", {
+    const ouroborosPath = createMockOuroboros(tempDir);
+    const epicPath = createMockEpic(ouroborosPath, "2025-01-21-test", {
       features: [
         {
           name: "feature-one",
@@ -402,8 +402,8 @@ describe("prompt file utilities", () => {
   });
 
   test("findTaskPromptFile finds existing prompt", () => {
-    const oroborosPath = createMockOroboros(tempDir);
-    const epicPath = createMockEpic(oroborosPath, "2025-01-21-test", {
+    const ouroborosPath = createMockOuroboros(tempDir);
+    const epicPath = createMockEpic(ouroborosPath, "2025-01-21-test", {
       features: [
         {
           name: "feature-one",
@@ -420,8 +420,8 @@ describe("prompt file utilities", () => {
   });
 
   test("countPromptFiles returns correct count", () => {
-    const oroborosPath = createMockOroboros(tempDir);
-    const epicPath = createMockEpic(oroborosPath, "2025-01-21-test", {
+    const ouroborosPath = createMockOuroboros(tempDir);
+    const epicPath = createMockEpic(ouroborosPath, "2025-01-21-test", {
       features: [
         {
           name: "feature-one",
@@ -453,8 +453,8 @@ describe("feature completion utilities", () => {
   });
 
   test("isFeatureComplete returns false when tasks incomplete", () => {
-    const oroborosPath = createMockOroboros(tempDir);
-    const epicPath = createMockEpic(oroborosPath, "2025-01-21-test", {
+    const ouroborosPath = createMockOuroboros(tempDir);
+    const epicPath = createMockEpic(ouroborosPath, "2025-01-21-test", {
       features: [
         {
           name: "feature-one",
@@ -472,8 +472,8 @@ describe("feature completion utilities", () => {
   });
 
   test("isFeatureComplete returns true when all tasks complete", () => {
-    const oroborosPath = createMockOroboros(tempDir);
-    const epicPath = createMockEpic(oroborosPath, "2025-01-21-test", {
+    const ouroborosPath = createMockOuroboros(tempDir);
+    const epicPath = createMockEpic(ouroborosPath, "2025-01-21-test", {
       features: [
         {
           name: "feature-one",
@@ -491,8 +491,8 @@ describe("feature completion utilities", () => {
   });
 
   test("getTaskGroupCount returns correct count", () => {
-    const oroborosPath = createMockOroboros(tempDir);
-    const epicPath = createMockEpic(oroborosPath, "2025-01-21-test", {
+    const ouroborosPath = createMockOuroboros(tempDir);
+    const epicPath = createMockEpic(ouroborosPath, "2025-01-21-test", {
       features: [
         {
           name: "feature-one",
@@ -511,8 +511,8 @@ describe("feature completion utilities", () => {
   });
 
   test("isLastTaskGroup returns true for last group", () => {
-    const oroborosPath = createMockOroboros(tempDir);
-    const epicPath = createMockEpic(oroborosPath, "2025-01-21-test", {
+    const ouroborosPath = createMockOuroboros(tempDir);
+    const epicPath = createMockEpic(ouroborosPath, "2025-01-21-test", {
       features: [
         {
           name: "feature-one",

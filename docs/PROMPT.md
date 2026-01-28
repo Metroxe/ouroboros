@@ -35,7 +35,7 @@ ouroboros/
 │   ├── PROMPT.md             # This file - LLM context guide
 │   └── implement-epic-explanation.md  # Detailed docs for the implement-epic script
 │
-├── oroboros/                 # The installable framework (gets copied to user projects)
+├── ouroboros/                # The installable framework (gets copied to user projects)
 │   ├── .version              # Current version number
 │   ├── prompts/              # The core workflow prompts
 │   │   ├── create-mission.md     # Define product vision
@@ -111,7 +111,7 @@ ouroboros/
 ## The Prompt Workflow
 
 ### 1. create-mission.md
-Creates `oroboros/reference/product-description.md` with:
+Creates `ouroboros/reference/product-description.md` with:
 - Mission statement
 - Problem statement
 - Target users
@@ -169,7 +169,7 @@ Automated pipeline that:
 Lightweight working sessions for exploratory work:
 - Supports starting new sessions or resuming existing ones
 - Gathers context from reference files (product-description, tech-stack, gotchas)
-- Creates dated session files: `oroboros/sessions/YYYY-MM-DD-topic-name.md`
+- Creates dated session files: `ouroboros/sessions/YYYY-MM-DD-topic-name.md`
 - Continuously updates notes with decisions, code changes, and next steps
 - Enables resumption when context windows fill up
 
@@ -229,7 +229,7 @@ Uses release-please for automated versioning. Commits with conventional commit m
 
 When working on this codebase, key files to understand:
 
-1. **Prompts** (`oroboros/prompts/*.md`): The core workflow definitions
+1. **Prompts** (`ouroboros/prompts/*.md`): The core workflow definitions
 2. **implement-epic.ts** (`scripts-src/scripts/implement-epic.ts`): Main automation logic
    - **Note**: When modifying this file, review `docs/implement-epic-explanation.md` and update it if behavior changes
 3. **Agent adapters** (`scripts-src/lib/agent/*.ts`): LLM runtime integrations
