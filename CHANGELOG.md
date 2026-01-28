@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.9.2](https://github.com/Metroxe/ouroboros/compare/v0.9.1...v0.9.2) (2026-01-28)
+
+
+### Bug Fixes
+
+* rename oroboros folder to ouroboros for consistency ([105646b](https://github.com/Metroxe/ouroboros/commit/105646b179e5cda2467ab7235d4fcadcc2135cb3))
+
 ## [0.9.1](https://github.com/Metroxe/ouroboros/compare/v0.9.0...v0.9.1) (2026-01-27)
 
 
