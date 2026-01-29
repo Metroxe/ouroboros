@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.12.0](https://github.com/Metroxe/ouroboros/compare/v0.11.0...v0.12.0) (2026-01-29)
+
+
+### Features
+
+* add GitHub Copilot runtime support ([673426c](https://github.com/Metroxe/ouroboros/commit/673426c182311eac7c454bd8d0b47197ec521641))
+
 ## [0.11.0](https://github.com/Metroxe/ouroboros/compare/v0.10.0...v0.11.0) (2026-01-29)
 
 
