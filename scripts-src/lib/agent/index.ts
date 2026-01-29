@@ -7,6 +7,7 @@
  */
 
 import { claudeRuntime } from "./claude.js";
+import { copilotRuntime } from "./copilot.js";
 import { cursorRuntime } from "./cursor.js";
 import { opencodeRuntime } from "./opencode.js";
 import type { LLMRuntime, RuntimeName } from "./types.js";
@@ -23,6 +24,7 @@ export type {
 
 // Export individual runtimes
 export { claudeRuntime } from "./claude.js";
+export { copilotRuntime } from "./copilot.js";
 export { cursorRuntime } from "./cursor.js";
 export { opencodeRuntime } from "./opencode.js";
 
@@ -38,6 +40,7 @@ export {
  */
 const runtimes: Record<RuntimeName, LLMRuntime> = {
   claude: claudeRuntime,
+  copilot: copilotRuntime,
   cursor: cursorRuntime,
   opencode: opencodeRuntime,
 };

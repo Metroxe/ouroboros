@@ -206,6 +206,7 @@ task_groups:
 - **Claude Code** (`claude` CLI): Full token tracking, cost estimation
 - **Cursor** (`cursor` CLI): IDE integration
 - **OpenCode** (`opencode` CLI): Alternative runtime
+- **GitHub Copilot** (`copilot` CLI): GitHub Copilot subscription required
 
 ## Development
 

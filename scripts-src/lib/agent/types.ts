@@ -11,7 +11,7 @@
 /**
  * Available LLM runtime identifiers
  */
-export type RuntimeName = "claude" | "cursor" | "opencode";
+export type RuntimeName = "claude" | "cursor" | "opencode" | "copilot";
 
 /**
  * Model metadata returned by listModels()

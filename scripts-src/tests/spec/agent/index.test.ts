@@ -9,20 +9,22 @@ import {
   getDefaultRuntime,
   getAvailableRuntimes,
   claudeRuntime,
+  copilotRuntime,
   cursorRuntime,
   opencodeRuntime,
 } from "../../../lib/agent/index.js";
 
 describe("getAllRuntimes", () => {
-  test("returns all 3 runtimes", () => {
+  test("returns all 4 runtimes", () => {
     const runtimes = getAllRuntimes();
-    expect(runtimes).toHaveLength(3);
+    expect(runtimes).toHaveLength(4);
   });
 
-  test("includes claude, cursor, and opencode runtimes", () => {
+  test("includes claude, copilot, cursor, and opencode runtimes", () => {
     const runtimes = getAllRuntimes();
     const names = runtimes.map((r) => r.name);
     expect(names).toContain("claude");
+    expect(names).toContain("copilot");
     expect(names).toContain("cursor");
     expect(names).toContain("opencode");
   });
@@ -48,6 +50,13 @@ describe("getRuntime", () => {
     expect(runtime).toBe(opencodeRuntime);
     expect(runtime.name).toBe("opencode");
     expect(runtime.displayName).toBe("Open Code");
+  });
+
+  test("returns copilot runtime by name", () => {
+    const runtime = getRuntime("copilot");
+    expect(runtime).toBe(copilotRuntime);
+    expect(runtime.name).toBe("copilot");
+    expect(runtime.displayName).toBe("GitHub Copilot");
   });
 });
 
@@ -82,7 +91,7 @@ describe("getAvailableRuntimes", () => {
 });
 
 describe("runtime interface compliance", () => {
-  const runtimes = [claudeRuntime, cursorRuntime, opencodeRuntime];
+  const runtimes = [claudeRuntime, copilotRuntime, cursorRuntime, opencodeRuntime];
 
   for (const runtime of runtimes) {
     describe(`${runtime.displayName}`, () => {
