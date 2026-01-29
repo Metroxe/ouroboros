@@ -338,22 +338,32 @@ export const claudeRuntime: LLMRuntime = {
 
   async listModels(): Promise<Model[]> {
     // Claude Code CLI doesn't have a models list command
-    // Return known models
+    // Return known models from official documentation
     return [
       {
-        id: "claude-sonnet-4-20250514",
-        name: "Claude Sonnet 4",
-        description: "Balanced performance and cost",
-      },
-      {
-        id: "claude-opus-4-20250514",
-        name: "Claude Opus 4",
+        id: "claude-opus-4-5-20251101",
+        name: "Claude Opus 4.5",
         description: "Most capable model",
       },
       {
-        id: "claude-3-5-sonnet-20241022",
-        name: "Claude 3.5 Sonnet",
-        description: "Previous generation",
+        id: "claude-sonnet-4-5-20250929",
+        name: "Claude Sonnet 4.5",
+        description: "Balanced performance and cost (default)",
+      },
+      {
+        id: "claude-sonnet-4-20250514",
+        name: "Claude Sonnet 4",
+        description: "Previous generation Sonnet",
+      },
+      {
+        id: "claude-haiku-4-5-20251001",
+        name: "Claude Haiku 4.5",
+        description: "Fast and cost-effective",
+      },
+      {
+        id: "claude-3-5-haiku-20241022",
+        name: "Claude 3.5 Haiku",
+        description: "Previous generation Haiku",
       },
     ];
   },
