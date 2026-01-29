@@ -194,30 +194,32 @@ Write exhaustive, unambiguous criteria. Leave nothing to interpretation. Each cr
 
 # PHASE 4: Generate Features Index
 
-After creating all feature PRDs, generate a summary file at `{epic-path}/features-index.yml`:
+After creating all feature PRDs, generate a summary file at `{epic-path}/features-index.yml`.
+
+**YAML Formatting:** Always wrap string values in double quotes to avoid parsing errors.
 
 ```yaml
-epic_name: {Epic Name}
-epic_path: {epic-path}
-generated: {YYYY-MM-DD}
+epic_name: "{Epic Name}"
+epic_path: "{epic-path}"
+generated: "{YYYY-MM-DD}"
 total_features: {N}
 
 features:
   - number: "01"
-    name: {feature-name}
-    path: features/01-{feature-name}/prd.md
-    description: {Brief summary}
+    name: "{feature-name}"
+    path: "features/01-{feature-name}/prd.md"
+    description: "{Brief summary}"
     completed: false
     depends_on: []  # First feature typically has no dependencies
     provides:
-      - component: {shared-component-name}
-        description: {What it does}
+      - component: "{shared-component-name}"
+        description: "{What it does}"
         used_by: ["02", "03"]  # Feature numbers that will use this
     implementation_notes: null  # Populated after feature is implemented
   - number: "02"
-    name: {feature-name}
-    path: features/02-{feature-name}/prd.md
-    description: {Brief summary}
+    name: "{feature-name}"
+    path: "features/02-{feature-name}/prd.md"
+    description: "{Brief summary}"
     completed: false
     depends_on: ["01"]  # List of feature numbers this depends on
     provides: []  # Empty if this feature doesn't provide shared components
@@ -227,8 +229,8 @@ features:
 # After a feature is completed, implementation_notes is populated:
 # implementation_notes:
 #   shared_components_created:
-#     - path: scripts/lib/helpers.sh
-#       description: Color output and argument parsing utilities
+#     - path: "scripts/lib/helpers.sh"
+#       description: "Color output and argument parsing utilities"
 #   patterns_established:
 #     - "All scripts use getopts for argument parsing"
 #   gotchas:
@@ -236,11 +238,11 @@ features:
 
 technical_overview:
   shared_patterns:
-    - {Patterns, utilities, or approaches used across multiple features}
+    - "{Patterns, utilities, or approaches used across multiple features}"
   key_integration_points:
-    - {External systems, APIs, or services features integrate with}
+    - "{External systems, APIs, or services features integrate with}"
   reusable_components:
-    - {Existing codebase components that features will leverage}
+    - "{Existing codebase components that features will leverage}"
 
 notes: |
   {Any additional context, risks, or considerations for implementation}

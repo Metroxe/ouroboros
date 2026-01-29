@@ -203,20 +203,20 @@ After updating epic-index.md, proceed with the implementation instructions below
 
 Update `{epic-path}/features-index.yml` with implementation notes so later features know what was actually built:
 
-Find this feature's entry and add the `implementation_notes` field:
+Find this feature's entry and add the `implementation_notes` field (always wrap string values in double quotes):
 
 ```yaml
   - number: "{NN}"
-    name: {feature-name}
-    path: features/{NN}-{feature-name}/prd.md
-    description: {description}
+    name: "{feature-name}"
+    path: "features/{NN}-{feature-name}/prd.md"
+    description: "{description}"
     completed: true  # <- Change from false to true
     depends_on: [...]
     provides: [...]
     implementation_notes:
       shared_components_created:
-        - path: {file-path-you-created}
-          description: {What it does and how to use it}
+        - path: "{file-path-you-created}"
+          description: "{What it does and how to use it}"
       patterns_established:
         - "{Any patterns or conventions you established that later features should follow}"
       gotchas:

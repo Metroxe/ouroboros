@@ -394,20 +394,20 @@ The final task group should include updating `{epic-path}/features-index.yml` to
 ```markdown
 - [ ] N.X Update features-index.yml with implementation notes
   - File: `{epic-path}/features-index.yml`
-  - Find this feature's entry and add/update the `implementation_notes` field:
+  - Find this feature's entry and add/update the `implementation_notes` field (always wrap string values in double quotes):
     ```yaml
     - number: "{NN}"
-      name: {feature-name}
+      name: "{feature-name}"
       # ... existing fields ...
       completed: true
       implementation_notes:
         shared_components_created:
-          - path: {file-path}
-            description: {What it does and how to use it}
+          - path: "{file-path}"
+            description: "{What it does and how to use it}"
         patterns_established:
-          - {Pattern or convention that later features should follow}
+          - "{Pattern or convention that later features should follow}"
         gotchas:
-          - {Any non-obvious implementation details or constraints}
+          - "{Any non-obvious implementation details or constraints}"
     ```
   - This helps later features understand what was actually built (not just what was planned in the PRD)
 ```
