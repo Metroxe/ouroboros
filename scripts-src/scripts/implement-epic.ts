@@ -51,8 +51,9 @@ import {
 } from "../lib/epic.js";
 
 import {
-  readFeaturesIndex,
+  readFeaturesIndexWithDetails,
   readProgressYml,
+  readProgressYmlWithDetails,
   type ProgressYml,
 } from "../lib/yaml.js";
 
@@ -696,13 +697,44 @@ Complete all phases without stopping for confirmation. When features-index.yml a
     "Create Features"
   );
 
-  // Verify files were created
-  const featuresIndex = readFeaturesIndex(config.epic.path);
+  // Verify files were created with detailed error messages
+  const featuresIndexPath = join(config.epic.path, "features-index.yml");
+  const featuresDir = join(config.epic.path, "features");
+
+  const indexResult = readFeaturesIndexWithDetails(config.epic.path);
   const features = discoverFeaturesFromDirectory(config.epic.path);
 
-  if (!featuresIndex || features.length === 0) {
-    p.log.error("Features were not created properly.");
+  if (!indexResult.exists) {
+    p.log.error(`features-index.yml was not created at: ${featuresIndexPath}`);
+    p.log.info("The agent may have failed to complete the create-features prompt.");
     p.log.info("Check the output above for errors.");
+    process.exit(1);
+  }
+
+  if (indexResult.error) {
+    p.log.error(`features-index.yml exists but failed to parse:`);
+    p.log.message(`  ${indexResult.error}`);
+    p.log.info(`File location: ${featuresIndexPath}`);
+    process.exit(1);
+  }
+
+  if (!existsSync(featuresDir)) {
+    p.log.error(`features/ directory was not created at: ${featuresDir}`);
+    p.log.info("The agent created features-index.yml but no feature folders.");
+    process.exit(1);
+  }
+
+  if (features.length === 0) {
+    p.log.error(`No feature folders found in: ${featuresDir}`);
+    p.log.info("Feature folders should match pattern: NN-feature-name (e.g., 01-user-model)");
+    process.exit(1);
+  }
+
+  // Validate features match between index and directory
+  const validation = validateFeatures(config.epic.path);
+  if (!validation.valid) {
+    p.log.error("Feature validation failed:");
+    validation.errors.forEach((err) => p.log.message(`  - ${err}`));
     process.exit(1);
   }
 
@@ -742,8 +774,12 @@ Complete all phases without stopping for confirmation. When tasks.md is created,
     );
 
     // Verify tasks.md was created
-    if (!existsSync(join(feature.path, "tasks.md"))) {
+    const tasksPath = join(feature.path, "tasks.md");
+    if (!existsSync(tasksPath)) {
       p.log.error(`tasks.md was not created for ${feature.folderName}`);
+      p.log.info(`Expected location: ${tasksPath}`);
+      p.log.info("The agent may have failed to complete the create-tasks prompt.");
+      p.log.info("Check the output above for errors.");
       process.exit(1);
     }
 
@@ -783,10 +819,29 @@ Complete all phases without stopping for confirmation. When progress.yml and pro
       `Create Task Prompts: ${feature.name}`
     );
 
-    // Verify prompts were created
-    const progress = readProgressYml(feature.path);
-    if (!progress) {
+    // Verify prompts were created with detailed error messages
+    const promptsDir = join(feature.path, "prompts");
+    const progressPath = join(promptsDir, "progress.yml");
+    const progressResult = readProgressYmlWithDetails(feature.path);
+
+    if (!existsSync(promptsDir)) {
+      p.log.error(`prompts/ directory was not created for ${feature.folderName}`);
+      p.log.info(`Expected location: ${promptsDir}`);
+      p.log.info("The agent may have failed to complete the create-task-prompts prompt.");
+      process.exit(1);
+    }
+
+    if (!progressResult.exists) {
       p.log.error(`progress.yml was not created for ${feature.folderName}`);
+      p.log.info(`Expected location: ${progressPath}`);
+      p.log.info("The agent may have created the prompts/ directory but not progress.yml.");
+      process.exit(1);
+    }
+
+    if (progressResult.error) {
+      p.log.error(`progress.yml exists but failed to parse:`);
+      p.log.message(`  ${progressResult.error}`);
+      p.log.info(`File location: ${progressPath}`);
       process.exit(1);
     }
 
@@ -810,12 +865,25 @@ async function phase6Implement(
 
   for (let fi = startFeatureIndex; fi < features.length; fi++) {
     const feature = features[fi];
-    const progress = readProgressYml(feature.path);
+    const progressResult = readProgressYmlWithDetails(feature.path);
 
-    if (!progress) {
+    if (!progressResult.exists) {
+      const progressPath = join(feature.path, "prompts", "progress.yml");
       p.log.error(`No progress.yml found for ${feature.folderName}`);
+      p.log.info(`Expected location: ${progressPath}`);
+      p.log.info("Run phase 5 (Create Task Prompts) first.");
       process.exit(1);
     }
+
+    if (progressResult.error) {
+      const progressPath = join(feature.path, "prompts", "progress.yml");
+      p.log.error(`progress.yml exists but failed to parse for ${feature.folderName}:`);
+      p.log.message(`  ${progressResult.error}`);
+      p.log.info(`File location: ${progressPath}`);
+      process.exit(1);
+    }
+
+    const progress = progressResult.data!;
 
     p.log.info(`Implementing feature: ${feature.folderName}`);
 
@@ -834,7 +902,11 @@ async function phase6Implement(
       // Find the prompt file
       const promptFile = findTaskPromptFile(feature.path, tgi, taskGroup.name);
       if (!promptFile) {
+        const promptNumber = tgi + 1;
+        const promptsDir = join(feature.path, "prompts");
         p.log.error(`Prompt file not found for task group: ${taskGroup.name}`);
+        p.log.info(`Expected pattern: ${promptNumber}-*.md in ${promptsDir}`);
+        p.log.info(`Task group index: ${tgi} (0-based), prompt number: ${promptNumber} (1-based)`);
         process.exit(1);
       }
 
@@ -850,11 +922,23 @@ Complete all tasks in this task group. Update progress.yml when done.`;
       );
 
       // Verify progress.yml was updated
-      const updatedProgress = readProgressYml(feature.path);
-      if (!updatedProgress) {
-        p.log.error("Failed to read progress.yml after execution");
+      const updatedProgressResult = readProgressYmlWithDetails(feature.path);
+      if (!updatedProgressResult.exists) {
+        const progressPath = join(feature.path, "prompts", "progress.yml");
+        p.log.error("progress.yml was deleted during execution");
+        p.log.info(`Expected location: ${progressPath}`);
         process.exit(1);
       }
+
+      if (updatedProgressResult.error) {
+        const progressPath = join(feature.path, "prompts", "progress.yml");
+        p.log.error("progress.yml was corrupted during execution:");
+        p.log.message(`  ${updatedProgressResult.error}`);
+        p.log.info(`File location: ${progressPath}`);
+        process.exit(1);
+      }
+
+      const updatedProgress = updatedProgressResult.data!;
 
       const updatedTaskGroup = updatedProgress.task_groups[tgi];
       if (!updatedTaskGroup.completed) {

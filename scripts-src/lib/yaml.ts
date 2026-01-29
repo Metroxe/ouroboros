@@ -52,6 +52,15 @@ export interface ProgressYml {
 }
 
 /**
+ * Result of parsing a YAML file with detailed error information
+ */
+export interface ParseResult<T> {
+  data: T | null;
+  error: string | null;
+  exists: boolean;
+}
+
+/**
  * Parse a YAML file and return its contents
  */
 export function parseYamlFile<T>(filePath: string): T | null {
@@ -63,6 +72,25 @@ export function parseYamlFile<T>(filePath: string): T | null {
     return parse(content) as T;
   } catch (error) {
     return null;
+  }
+}
+
+/**
+ * Parse a YAML file and return detailed result including error information
+ */
+export function parseYamlFileWithDetails<T>(filePath: string): ParseResult<T> {
+  if (!existsSync(filePath)) {
+    return { data: null, error: null, exists: false };
+  }
+  try {
+    const content = readFileSync(filePath, "utf-8");
+    return { data: parse(content) as T, error: null, exists: true };
+  } catch (error) {
+    return {
+      data: null,
+      error: error instanceof Error ? error.message : String(error),
+      exists: true,
+    };
   }
 }
 
@@ -82,6 +110,17 @@ export function readFeaturesIndex(epicPath: string): FeaturesIndex | null {
 }
 
 /**
+ * Read features-index.yml from an epic path with detailed error information
+ */
+export function readFeaturesIndexWithDetails(
+  epicPath: string
+): ParseResult<FeaturesIndex> {
+  return parseYamlFileWithDetails<FeaturesIndex>(
+    `${epicPath}/features-index.yml`
+  );
+}
+
+/**
  * Write features-index.yml to an epic path
  */
 export function writeFeaturesIndex(
@@ -96,6 +135,17 @@ export function writeFeaturesIndex(
  */
 export function readProgressYml(featurePath: string): ProgressYml | null {
   return parseYamlFile<ProgressYml>(`${featurePath}/prompts/progress.yml`);
+}
+
+/**
+ * Read progress.yml from a feature path with detailed error information
+ */
+export function readProgressYmlWithDetails(
+  featurePath: string
+): ParseResult<ProgressYml> {
+  return parseYamlFileWithDetails<ProgressYml>(
+    `${featurePath}/prompts/progress.yml`
+  );
 }
 
 /**
