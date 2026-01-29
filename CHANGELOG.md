@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.11.0](https://github.com/Metroxe/ouroboros/compare/v0.10.0...v0.11.0) (2026-01-29)
+
+
+### Features
+
+* update model list in Claude runtime with new entries ([819d192](https://github.com/Metroxe/ouroboros/commit/819d192fec632681e246a48ae4798de3a1546f3c))
+
+
+### Bug Fixes
+
+* enforce double quotes for string values in YAML formatting ([a5db027](https://github.com/Metroxe/ouroboros/commit/a5db027c4903fc6269c211477a63e5b25d65efd8))
+
 ## [0.10.0](https://github.com/Metroxe/ouroboros/compare/v0.9.2...v0.10.0) (2026-01-29)
 
 
