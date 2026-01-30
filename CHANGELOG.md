@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.12.1](https://github.com/Metroxe/ouroboros/compare/v0.12.0...v0.12.1) (2026-01-30)
+
+
+### Bug Fixes
+
+* correct formatting in getAvailableRuntimes function and improve test readability ([52bd50e](https://github.com/Metroxe/ouroboros/commit/52bd50ec5b631b52d0035d44250da4d723fe12bd))
+
 ## [0.12.0](https://github.com/Metroxe/ouroboros/compare/v0.11.0...v0.12.0) (2026-01-29)
 
 
