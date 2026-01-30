@@ -75,7 +75,7 @@ export async function getAvailableRuntimes(): Promise<LLMRuntime[]> {
     allRuntimes.map(async (runtime) => ({
       runtime,
       available: await runtime.isAvailable(),
-    }))
+    })),
   );
 
   return availabilityChecks

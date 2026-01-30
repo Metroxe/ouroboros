@@ -91,7 +91,12 @@ describe("getAvailableRuntimes", () => {
 });
 
 describe("runtime interface compliance", () => {
-  const runtimes = [claudeRuntime, copilotRuntime, cursorRuntime, opencodeRuntime];
+  const runtimes = [
+    claudeRuntime,
+    copilotRuntime,
+    cursorRuntime,
+    opencodeRuntime,
+  ];
 
   for (const runtime of runtimes) {
     describe(`${runtime.displayName}`, () => {
